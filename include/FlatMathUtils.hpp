@@ -1,15 +1,26 @@
 // Math support structs and functions
 
 
+#ifndef MATHUTILS_H
+#define MATHUTILS_H
+
 #include <math.h>
 #include <float.h>
-#include <assert.h>
+// #include <assert.h>
 // #include <stdlib.h> 
 
+#define _MATH_BEGIN namespace _math {
+#define _MATH_END   }
+#define _MATH       ::_math::
 
-namespace math { // BEGIN namespace math
 
-const float PI = 3.14159265358979323846264f;
+
+_MATH_BEGIN // BEGIN namespace math
+
+constexpr const float PI = 3.14159265358979323846264f;
+
+struct gvector;
+struct sq_matrix;
 
 // https://stackoverflow.com/questions/17333/what-is-the-most-effective-way-for-float-and-double-comparison
 bool AlmostEqual2sComplement(float A, float B, int maxUlps)    
@@ -35,7 +46,7 @@ bool AlmostEqual2sComplement(float A, float B, int maxUlps)
 struct gvector {
 
     // constructor
-    explicit gvector (float x = 0, float y = 0) noexcept : Xcoord(x), Ycoord(y) {}
+    gvector (float x = 0, float y = 0) noexcept : Xcoord(x), Ycoord(y) {}
 
     // copy constructor
     gvector (const gvector& _Right) noexcept = default;
@@ -68,7 +79,7 @@ struct gvector {
 
 
 
-    // arithmetics
+// arithmetics
 
     // set gvector values
     void set (float x, float y) noexcept {
@@ -76,28 +87,50 @@ struct gvector {
         Ycoord = y;
     }
 
-    // get opposit gvector
-    // TODO: why I can't return a ref to gvector?
+    // get an opposit gvector
+    // TODO: is it possible to get rid of unnecessary assignment or there work a move assignment?
     gvector operator- () noexcept {
         return gvector(-Xcoord, -Ycoord);
     }
-
+    
     // sum of two gvectors
-    void operator+= (const gvector& _Right) noexcept {
+    gvector& operator+= (const gvector& _Right) noexcept {
         Xcoord += _Right.Xcoord;
         Ycoord += _Right.Ycoord;
+
+        return *this;
+    }
+
+    // sum of two gvectors
+    gvector operator+ (const gvector& _Right) noexcept {
+        gvector _Tmp(*this);
+        return (_Tmp += _Right);
     }
 
     // diff of two gvectors
-    void operator-= (const gvector& _Right) noexcept {
+    gvector& operator-= (const gvector& _Right) noexcept {
         Xcoord -= _Right.Xcoord;
         Ycoord -= _Right.Ycoord;
+
+        return *this;
+    }
+
+    gvector operator- (const gvector& _Right) noexcept {
+        gvector _Tmp(*this);
+        return (_Tmp += _Right);
     }
 
     // mult gvector and a number from field
-    void operator*= (float M) noexcept {
+    gvector operator*= (float M) noexcept {
         Xcoord *= M;
         Ycoord *= M;
+
+        return *this;
+    }
+
+    gvector operator* (float M) noexcept {
+        gvector _Tmp(*this);
+        return (_Tmp *= M);
     }
 
     // Euclidean norm of gvector 
@@ -149,7 +182,6 @@ struct sq_matrix {
 // arithmetics
 
     // transpose matrix  
-    // TODO: why I can't return a ref to sq_matrix?
     sq_matrix transpose() const {
         return sq_matrix (gvector(gvec1.Xcoord, gvec2.Xcoord), gvector(gvec1.Ycoord, gvec2.Ycoord));
     }
@@ -166,7 +198,7 @@ struct sq_matrix {
     
     // TODO: need implement AXC::VERIFY
     sq_matrix invert() const {
-        // AXC::VERIFY(this->is_invertible());
+        AXC::VERIFY(this->is_invertible());
         
         float det = this->det();
         sq_matrix invert_matrix;
@@ -190,47 +222,115 @@ struct sq_matrix {
 
 
 
+// dot product of geometric vectors
+inline float dot (const gvector& a, const gvector& b) noexcept {
+    return a.Xcoord * b.Xcoord + a.Ycoord * b.Ycoord;
+}
 
+// cross product of geometric vectors
+// return determinant of sq_matrix based on a and b that equal norm of vector [a,b] in 3D
+inline float cross (const gvector& a, const gvector& b) noexcept {
+    return a.Xcoord * b.Ycoord - a.Ycoord * b.Xcoord;
+}
 
+// cross product of geometric vector and number
+inline gvector get_normal (const gvector& _gvector) noexcept {
+    return gvector(_gvector.Ycoord, -_gvector.Xcoord);
+}
 
+// multiplication of gvector-row and sq_matrix
+// return a vector-row 1x2
+inline gvector operator* (const gvector& gvec, const sq_matrix& mat) noexcept {
+    return gvector(
+        gvec.Xcoord * mat.gvec1.Xcoord + gvec.Ycoord * mat.gvec1.Ycoord,
+        gvec.Xcoord * mat.gvec2.Xcoord + gvec.Ycoord * mat.gvec2.Ycoord 
+    );
+}
 
+// multiplication of matrix and gvector-column
+// return a vector-column 2x1
+inline gvector operator* (const sq_matrix& mat, const gvector& gvec) noexcept {
+    return gvector(
+        mat.gvec1.Xcoord * gvec.Xcoord + mat.gvec2.Xcoord * gvec.Ycoord,
+        mat.gvec1.Ycoord * gvec.Xcoord + mat.gvec2.Ycoord * gvec.Ycoord
+    );
+}
 
+//
+// inline gvector operator+ (const gvector& a, const gvector& b) noexcept {
+//     return gvector(
+//         a.Xcoord + b.Xcoord,
+//         a.Ycoord + b.Ycoord
+//     );
+// }
 
+//
+inline gvector operator- (const gvector& a, const gvector& b) noexcept {
+    return gvector(
+        a.Xcoord - b.Xcoord,
+        a.Ycoord - b.Ycoord
+    );
+} 
 
+// 
+inline sq_matrix operator+ (const sq_matrix& a, const sq_matrix& b) noexcept {
+    return sq_matrix(
+        a.gvec1 + b.gvec1,
+        a.gvec2 + b.gvec2
+    );
+}
 
+//
+inline sq_matrix operator* (const sq_matrix& a, const sq_matrix& b) noexcept {
+    return sq_matrix(
+        a * b.gvec1,
+        a * b.gvec2
+    );
+}
 
+//
+inline float sign (float var) noexcept {
+    return var > 0.0f ? 1.0f : -1.0f;
+} 
 
+inline float abs (float var) noexcept {
+    // return fabsf(var);
+    return var > 0.0f ? var : -var; 
+}
 
+inline gvector abs (const gvector& gvec) noexcept {
+    return gvector(
+        _MATH abs(gvec.Xcoord),
+        _MATH abs(gvec.Ycoord)
+    ); 
+}
 
+inline sq_matrix abs (const sq_matrix& mat) noexcept {
+    return sq_matrix(
+        _MATH abs(mat.gvec1),
+        _MATH abs(mat.gvec2)
+    );
+}
 
+inline float min (float a, float b) noexcept {
+    return a > b ? b : a;
+}
 
+inline float max (float a, float b) noexcept {
+    return a > b ? a : b;
+}
 
+inline float clamp (float var, float _UpperBound, float _LowerBound) noexcept {
+    return _MATH max( _LowerBound, _MATH min(var, _UpperBound) );
+}
 
+inline float random(float _LowerBound = -1.0f, float _UpperBound = 1.0f) noexcept {
+    float result = (float) rand();
+    result /= RAND_MAX;
+    result = (_UpperBound - _LowerBound) * result + _LowerBound;
+    return result;
+} 
 
+_MATH_END // END namespace math
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-} // END namespace math
-
-
+#endif
