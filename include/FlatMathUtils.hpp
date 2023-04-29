@@ -18,8 +18,8 @@
 
 _MATH_BEGIN // BEGIN namespace math
 
-constexpr const float PI = 3.14159265358979323846264f;
-static const int32_t kMaxUlps = 4;
+constexpr const float   PI       = 3.14159265358979323846264f;
+static    const int32_t kMaxUlps = 4;
 
 struct gvector;
 struct sq_matrix;
@@ -104,10 +104,10 @@ struct gvector {
     }
 
     // sum of two gvectors
-    // gvector operator+ (const gvector& _Right) noexcept {
-    //     gvector _Tmp(*this);
-    //     return (_Tmp += _Right);
-    // }
+    gvector operator+ (const gvector& _Right) noexcept {
+        gvector _Tmp(*this);
+        return (_Tmp += _Right);
+    }
 
     // diff of two gvectors
     gvector& operator-= (const gvector& _Right) noexcept {
@@ -181,7 +181,7 @@ struct sq_matrix {
 
 
 
-// arithmetics
+// transformations
 
     // transpose matrix  
     sq_matrix transpose() const noexcept {
@@ -215,7 +215,12 @@ struct sq_matrix {
         return invert_matrix;
     }
 
-
+    sq_matrix operator+ (const sq_matrix& b) noexcept {
+    return sq_matrix(
+        this->gvec1 + b.gvec1,
+        this->gvec2 + b.gvec2
+    );
+}
 
     gvector gvec1;
     gvector gvec2;
@@ -257,12 +262,13 @@ inline gvector operator* (const sq_matrix& mat, const gvector& gvec) noexcept {
     );
 }
 
-inline gvector operator+ (const gvector& a, const gvector& b) noexcept {
-    return gvector(
-        a.Xcoord + b.Xcoord,
-        a.Ycoord + b.Ycoord
-    );
-}
+//
+// inline gvector operator+ (const gvector& a, const gvector& b) noexcept {
+//     return gvector(
+//         a.Xcoord + b.Xcoord,
+//         a.Ycoord + b.Ycoord
+//     );
+// }
 
 //
 inline gvector operator- (const gvector& a, const gvector& b) noexcept {
@@ -273,12 +279,12 @@ inline gvector operator- (const gvector& a, const gvector& b) noexcept {
 } 
 
 // 
-inline sq_matrix operator+ (const sq_matrix& a, const sq_matrix& b) noexcept {
-    return sq_matrix(
-        a.gvec1 + b.gvec1,
-        a.gvec2 + b.gvec2
-    );
-}
+// inline sq_matrix operator+ (const sq_matrix& a, const sq_matrix& b) noexcept {
+//     return sq_matrix(
+//         a.gvec1 + b.gvec1,
+//         a.gvec2 + b.gvec2
+//     );
+// }
 
 //
 inline sq_matrix operator* (const sq_matrix& a, const sq_matrix& b) noexcept {
