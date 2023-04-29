@@ -6,6 +6,7 @@
 
 #include <math.h>
 #include <float.h>
+#include "utils.hpp"
 // #include <assert.h>
 // #include <stdlib.h> 
 
@@ -18,27 +19,28 @@
 _MATH_BEGIN // BEGIN namespace math
 
 constexpr const float PI = 3.14159265358979323846264f;
+static const int32_t kMaxUlps = 4;
 
 struct gvector;
 struct sq_matrix;
 
 // https://stackoverflow.com/questions/17333/what-is-the-most-effective-way-for-float-and-double-comparison
-bool AlmostEqual2sComplement(float A, float B, int maxUlps)    
+bool _AlmostEqual(float A, float B, int maxUlps = kMaxUlps) //  Ulps - Units in the Last Place
 {    
-    // Make sure maxUlps is non-negative and small enough that the    
-    // default NAN won't compare as equal to anything.    
-    assert(maxUlps > 0 && maxUlps < 4 * 1024 * 1024);    
+    axc::_AXC_VERIFY(maxUlps > 0 && maxUlps < 4 * 1024 * 1024, "_AlmostEqual: invalid maxUlps");
+
     int aInt = *(int*)&A;    
-    // Make aInt lexicographically ordered as a twos-complement int    
-    if (aInt < 0)    
+    if (aInt < 0) // Make aInt lexicographically ordered as a twos-complement int    
         aInt = 0x80000000 - aInt;    
-    // Make bInt lexicographically ordered as a twos-complement int    
+
     int bInt = *(int*)&B;    
-    if (bInt < 0)    
+    if (bInt < 0) // Make bInt lexicographically ordered as a twos-complement int    
         bInt = 0x80000000 - bInt;    
+
     int intDiff = abs(aInt - bInt);    
     if (intDiff <= maxUlps)    
-        return true;    
+        return true;
+
     return false;    
 }
 
@@ -102,10 +104,10 @@ struct gvector {
     }
 
     // sum of two gvectors
-    gvector operator+ (const gvector& _Right) noexcept {
-        gvector _Tmp(*this);
-        return (_Tmp += _Right);
-    }
+    // gvector operator+ (const gvector& _Right) noexcept {
+    //     gvector _Tmp(*this);
+    //     return (_Tmp += _Right);
+    // }
 
     // diff of two gvectors
     gvector& operator-= (const gvector& _Right) noexcept {
@@ -115,10 +117,10 @@ struct gvector {
         return *this;
     }
 
-    gvector operator- (const gvector& _Right) noexcept {
-        gvector _Tmp(*this);
-        return (_Tmp += _Right);
-    }
+    // gvector operator- (const gvector& _Right) noexcept {
+    //     gvector _Tmp(*this);
+    //     return (_Tmp += _Right);
+    // }
 
     // mult gvector and a number from field
     gvector operator*= (float M) noexcept {
@@ -128,10 +130,10 @@ struct gvector {
         return *this;
     }
 
-    gvector operator* (float M) noexcept {
-        gvector _Tmp(*this);
-        return (_Tmp *= M);
-    }
+    // gvector operator* (float M) noexcept {
+    //     gvector _Tmp(*this);
+    //     return (_Tmp *= M);
+    // }
 
     // Euclidean norm of gvector 
     float length() const noexcept {
@@ -182,27 +184,26 @@ struct sq_matrix {
 // arithmetics
 
     // transpose matrix  
-    sq_matrix transpose() const {
+    sq_matrix transpose() const noexcept {
         return sq_matrix (gvector(gvec1.Xcoord, gvec2.Xcoord), gvector(gvec1.Ycoord, gvec2.Ycoord));
     }
     
     // get a determinant of sq_matrix
-    float det() const {
+    float det() const noexcept {
         return gvec1.Xcoord * gvec2.Ycoord - gvec1.Ycoord * gvec2.Xcoord;
     }
 
     // TODO: it doesn't work properly
-    bool is_invertible() const {
-        return AlmostEqual2sComplement(gvec1.Xcoord * gvec2.Ycoord, gvec1.Ycoord * gvec2.Xcoord, 0);
+    bool is_invertible() const noexcept {
+        return !( _AlmostEqual(this->det(), 0) );
     } 
     
     // TODO: need implement AXC::VERIFY
-    sq_matrix invert() const {
-        AXC::VERIFY(this->is_invertible());
+    sq_matrix invert() const noexcept { 
+        axc::_AXC_VERIFY(this->is_invertible(), "invert: det of matrix is 0!" );
         
         float det = this->det();
         sq_matrix invert_matrix;
-        // assert( det != 0.0f );
         float det_mult = 1.0f / det;
 
         invert_matrix.gvec1.Xcoord =  det_mult * gvec2.Ycoord;
@@ -256,13 +257,12 @@ inline gvector operator* (const sq_matrix& mat, const gvector& gvec) noexcept {
     );
 }
 
-//
-// inline gvector operator+ (const gvector& a, const gvector& b) noexcept {
-//     return gvector(
-//         a.Xcoord + b.Xcoord,
-//         a.Ycoord + b.Ycoord
-//     );
-// }
+inline gvector operator+ (const gvector& a, const gvector& b) noexcept {
+    return gvector(
+        a.Xcoord + b.Xcoord,
+        a.Ycoord + b.Ycoord
+    );
+}
 
 //
 inline gvector operator- (const gvector& a, const gvector& b) noexcept {
