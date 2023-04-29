@@ -20,6 +20,7 @@ _MATH_BEGIN // BEGIN namespace math
 
 constexpr const float   PI       = 3.14159265358979323846264f;
 static    const int32_t kMaxUlps = 4;
+constexpr const bool    _INLINE_FLAG = 1;
 
 struct gvector;
 struct sq_matrix;
@@ -103,12 +104,6 @@ struct gvector {
         return *this;
     }
 
-    // sum of two gvectors
-    gvector operator+ (const gvector& _Right) noexcept {
-        gvector _Tmp(*this);
-        return (_Tmp += _Right);
-    }
-
     // diff of two gvectors
     gvector& operator-= (const gvector& _Right) noexcept {
         Xcoord -= _Right.Xcoord;
@@ -116,11 +111,6 @@ struct gvector {
 
         return *this;
     }
-
-    // gvector operator- (const gvector& _Right) noexcept {
-    //     gvector _Tmp(*this);
-    //     return (_Tmp += _Right);
-    // }
 
     // mult gvector and a number from field
     gvector operator*= (float M) noexcept {
@@ -130,10 +120,26 @@ struct gvector {
         return *this;
     }
 
-    // gvector operator* (float M) noexcept {
-    //     gvector _Tmp(*this);
-    //     return (_Tmp *= M);
-    // }
+
+#if !_INLINE_FLAG
+
+    // sum of two gvectors
+    gvector operator+ (const gvector& _Right) noexcept {
+        gvector _Tmp(*this);
+        return (_Tmp += _Right);
+    }
+
+    gvector operator- (const gvector& _Right) noexcept {
+        gvector _Tmp(*this);
+        return (_Tmp += _Right);
+    }
+    
+    gvector operator* (float M) noexcept {
+        gvector _Tmp(*this);
+        return (_Tmp *= M);
+    }
+
+#endif // !_INLINE_FLAG 
 
     // Euclidean norm of gvector 
     float length() const noexcept {
@@ -215,13 +221,41 @@ struct sq_matrix {
         return invert_matrix;
     }
 
-    sq_matrix operator+ (const sq_matrix& b) noexcept {
-    return sq_matrix(
-        this->gvec1 + b.gvec1,
-        this->gvec2 + b.gvec2
-    );
-}
 
+#if !_INLINE_FLAG 
+// arithmetics
+
+    sq_matrix operator+ (const sq_matrix& _Right) noexcept {
+        return sq_matrix(
+            this->gvec1 + _Right.gvec1,
+            this->gvec2 + _Right.gvec2
+        );
+    }
+
+    sq_matrix operator- (const sq_matrix& _Right) noexcept {
+        return sq_matrix(
+            this->gvec1 - _Right.gvec1,
+            this->gvec2 - _Right.gvec2
+        );
+    }
+
+    gvector operator* (const gvector& gvec) noexcept {
+        return gvector(
+            this->gvec1.Xcoord * gvec.Xcoord + this->gvec2.Xcoord * gvec.Ycoord,
+            this->gvec1.Ycoord * gvec.Xcoord + this->gvec2.Ycoord * gvec.Ycoord
+        );
+    }
+
+    sq_matrix operator* (const sq_matrix& _Right) noexcept {
+        return sq_matrix(
+            *this * _Right.gvec1,
+            *this * _Right.gvec2
+        );
+    }
+
+#endif // !_INLINE_FLAG
+    
+    
     gvector gvec1;
     gvector gvec2;
 };
@@ -244,6 +278,8 @@ inline gvector get_normal (const gvector& _gvector) noexcept {
     return gvector(_gvector.Ycoord, -_gvector.Xcoord);
 }
 
+
+#if _INLINE_FLAG
 // multiplication of gvector-row and sq_matrix
 // return a vector-row 1x2
 inline gvector operator* (const gvector& gvec, const sq_matrix& mat) noexcept {
@@ -263,12 +299,12 @@ inline gvector operator* (const sq_matrix& mat, const gvector& gvec) noexcept {
 }
 
 //
-// inline gvector operator+ (const gvector& a, const gvector& b) noexcept {
-//     return gvector(
-//         a.Xcoord + b.Xcoord,
-//         a.Ycoord + b.Ycoord
-//     );
-// }
+inline gvector operator+ (const gvector& a, const gvector& b) noexcept {
+    return gvector(
+        a.Xcoord + b.Xcoord,
+        a.Ycoord + b.Ycoord
+    );
+}
 
 //
 inline gvector operator- (const gvector& a, const gvector& b) noexcept {
@@ -278,13 +314,27 @@ inline gvector operator- (const gvector& a, const gvector& b) noexcept {
     );
 } 
 
+inline gvector operator* (float M, const gvector& gvec) noexcept {
+    return gvector(
+        gvec.Xcoord * M,
+        gvec.Ycoord * M
+    );
+}
+
 // 
-// inline sq_matrix operator+ (const sq_matrix& a, const sq_matrix& b) noexcept {
-//     return sq_matrix(
-//         a.gvec1 + b.gvec1,
-//         a.gvec2 + b.gvec2
-//     );
-// }
+inline sq_matrix operator+ (const sq_matrix& a, const sq_matrix& b) noexcept {
+    return sq_matrix(
+        a.gvec1 + b.gvec1,
+        a.gvec2 + b.gvec2
+    );
+}
+
+inline sq_matrix operator- (const sq_matrix& a, const sq_matrix& b) noexcept {
+    return sq_matrix(
+        a.gvec1 - b.gvec1,
+        a.gvec2 - b.gvec2
+    );
+}
 
 //
 inline sq_matrix operator* (const sq_matrix& a, const sq_matrix& b) noexcept {
@@ -293,6 +343,9 @@ inline sq_matrix operator* (const sq_matrix& a, const sq_matrix& b) noexcept {
         a * b.gvec2
     );
 }
+
+#endif // _INLINE_FLAG
+
 
 //
 inline float sign (float var) noexcept {
