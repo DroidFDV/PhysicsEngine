@@ -49,7 +49,7 @@ bool _AlmostEqual(float A, float B, int maxUlps = kMaxUlps) //  Ulps - Units in 
 struct gvector {
 
     // constructor
-    gvector (float x = 0, float y = 0) noexcept : Xcoord(x), Ycoord(y) {}
+    explicit gvector (float x = 0, float y = 0) noexcept : Xcoord(x), Ycoord(y) {}
 
     // copy constructor
     gvector (const gvector& _Right) noexcept = default;
@@ -92,7 +92,7 @@ struct gvector {
 
     // get an opposit gvector
     // TODO: is it possible to get rid of unnecessary assignment or there work a move assignment?
-    gvector operator- () noexcept {
+    gvector operator- () const noexcept {
         return gvector(-Xcoord, -Ycoord);
     }
     
@@ -100,7 +100,6 @@ struct gvector {
     gvector& operator+= (const gvector& _Right) noexcept {
         Xcoord += _Right.Xcoord;
         Ycoord += _Right.Ycoord;
-
         return *this;
     }
 
@@ -108,7 +107,6 @@ struct gvector {
     gvector& operator-= (const gvector& _Right) noexcept {
         Xcoord -= _Right.Xcoord;
         Ycoord -= _Right.Ycoord;
-
         return *this;
     }
 
@@ -116,7 +114,6 @@ struct gvector {
     gvector operator*= (float M) noexcept {
         Xcoord *= M;
         Ycoord *= M;
-
         return *this;
     }
 
@@ -124,17 +121,17 @@ struct gvector {
 #if !_INLINE_FLAG
 
     // sum of two gvectors
-    gvector operator+ (const gvector& _Right) noexcept {
+    gvector operator+ (const gvector& _Right) const noexcept {
         gvector _Tmp(*this);
         return (_Tmp += _Right);
     }
 
-    gvector operator- (const gvector& _Right) noexcept {
+    gvector operator- (const gvector& _Right) const noexcept {
         gvector _Tmp(*this);
         return (_Tmp += _Right);
     }
     
-    gvector operator* (float M) noexcept {
+    gvector operator* (float M) const noexcept {
         gvector _Tmp(*this);
         return (_Tmp *= M);
     }
@@ -205,7 +202,7 @@ struct sq_matrix {
     } 
     
     // TODO: need implement AXC::VERIFY
-    sq_matrix invert() const noexcept { 
+    sq_matrix invert() const { 
         axc::_AXC_VERIFY(this->is_invertible(), "invert: det of matrix is 0!" );
         
         float det = this->det();
@@ -225,28 +222,28 @@ struct sq_matrix {
 #if !_INLINE_FLAG 
 // arithmetics
 
-    sq_matrix operator+ (const sq_matrix& _Right) noexcept {
+    sq_matrix operator+ (const sq_matrix& _Right) const noexcept {
         return sq_matrix(
             this->gvec1 + _Right.gvec1,
             this->gvec2 + _Right.gvec2
         );
     }
 
-    sq_matrix operator- (const sq_matrix& _Right) noexcept {
+    sq_matrix operator- (const sq_matrix& _Right) const noexcept {
         return sq_matrix(
             this->gvec1 - _Right.gvec1,
             this->gvec2 - _Right.gvec2
         );
     }
 
-    gvector operator* (const gvector& gvec) noexcept {
+    gvector operator* (const gvector& gvec) const noexcept {
         return gvector(
             this->gvec1.Xcoord * gvec.Xcoord + this->gvec2.Xcoord * gvec.Ycoord,
             this->gvec1.Ycoord * gvec.Xcoord + this->gvec2.Ycoord * gvec.Ycoord
         );
     }
 
-    sq_matrix operator* (const sq_matrix& _Right) noexcept {
+    sq_matrix operator* (const sq_matrix& _Right) const noexcept {
         return sq_matrix(
             *this * _Right.gvec1,
             *this * _Right.gvec2
@@ -282,7 +279,7 @@ inline gvector get_normal (const gvector& _gvector) noexcept {
 #if _INLINE_FLAG
 // multiplication of gvector-row and sq_matrix
 // return a vector-row 1x2
-inline gvector operator* (const gvector& gvec, const sq_matrix& mat) noexcept {
+inline gvector operator* (const gvector& gvec, const sq_matrix& mat) const noexcept {
     return gvector(
         gvec.Xcoord * mat.gvec1.Xcoord + gvec.Ycoord * mat.gvec1.Ycoord,
         gvec.Xcoord * mat.gvec2.Xcoord + gvec.Ycoord * mat.gvec2.Ycoord 
@@ -291,7 +288,7 @@ inline gvector operator* (const gvector& gvec, const sq_matrix& mat) noexcept {
 
 // multiplication of matrix and gvector-column
 // return a vector-column 2x1
-inline gvector operator* (const sq_matrix& mat, const gvector& gvec) noexcept {
+inline gvector operator* (const sq_matrix& mat, const gvector& gvec) const noexcept {
     return gvector(
         mat.gvec1.Xcoord * gvec.Xcoord + mat.gvec2.Xcoord * gvec.Ycoord,
         mat.gvec1.Ycoord * gvec.Xcoord + mat.gvec2.Ycoord * gvec.Ycoord
@@ -299,7 +296,7 @@ inline gvector operator* (const sq_matrix& mat, const gvector& gvec) noexcept {
 }
 
 //
-inline gvector operator+ (const gvector& a, const gvector& b) noexcept {
+inline gvector operator+ (const gvector& a, const gvector& b) const noexcept {
     return gvector(
         a.Xcoord + b.Xcoord,
         a.Ycoord + b.Ycoord
@@ -307,14 +304,14 @@ inline gvector operator+ (const gvector& a, const gvector& b) noexcept {
 }
 
 //
-inline gvector operator- (const gvector& a, const gvector& b) noexcept {
+inline gvector operator- (const gvector& a, const gvector& b) const noexcept {
     return gvector(
         a.Xcoord - b.Xcoord,
         a.Ycoord - b.Ycoord
     );
 } 
 
-inline gvector operator* (float M, const gvector& gvec) noexcept {
+inline gvector operator* (float M, const gvector& gvec) const noexcept {
     return gvector(
         gvec.Xcoord * M,
         gvec.Ycoord * M
@@ -322,14 +319,14 @@ inline gvector operator* (float M, const gvector& gvec) noexcept {
 }
 
 // 
-inline sq_matrix operator+ (const sq_matrix& a, const sq_matrix& b) noexcept {
+inline sq_matrix operator+ (const sq_matrix& a, const sq_matrix& b) const noexcept {
     return sq_matrix(
         a.gvec1 + b.gvec1,
         a.gvec2 + b.gvec2
     );
 }
 
-inline sq_matrix operator- (const sq_matrix& a, const sq_matrix& b) noexcept {
+inline sq_matrix operator- (const sq_matrix& a, const sq_matrix& b) const noexcept {
     return sq_matrix(
         a.gvec1 - b.gvec1,
         a.gvec2 - b.gvec2
@@ -337,7 +334,7 @@ inline sq_matrix operator- (const sq_matrix& a, const sq_matrix& b) noexcept {
 }
 
 //
-inline sq_matrix operator* (const sq_matrix& a, const sq_matrix& b) noexcept {
+inline sq_matrix operator* (const sq_matrix& a, const sq_matrix& b) const noexcept {
     return sq_matrix(
         a * b.gvec1,
         a * b.gvec2
