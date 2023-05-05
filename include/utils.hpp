@@ -1,4 +1,5 @@
 #include <cstdlib>
+#include <iostream>
 
 #define _AXC_BEGIN namespace axc {
 #define _AXC_END   }
@@ -11,7 +12,9 @@ _AXC_BEGIN
 inline void _AXC_VERIFY (bool expression, const char* msg) {
     if (expression == true)
     {
-        // std::cerr << '\n' << msg << '\n';
+        std::cerr << '\n===================================================' 
+            << msg 
+            << '\n===================================================';
         std::exit(134);
     }
 }
