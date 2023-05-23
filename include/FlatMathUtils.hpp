@@ -220,6 +220,7 @@ struct sq_matrix {
 
 
 #if !_INLINE_FLAG 
+
 // arithmetics
 
     sq_matrix operator+ (const sq_matrix& _Right) const noexcept {
@@ -275,6 +276,16 @@ inline gvector get_normal (const gvector& _gvector) noexcept {
     return gvector(_gvector.Ycoord, -_gvector.Xcoord);
 }
 
+//
+inline gvector normalization (const gvector& _gvector) noexcept {
+    float length = _gvector.norm();
+    return gvector(_gvector.Xcoord / length, _gvector.Ycoord / length);
+}
+
+//
+inline float get_angle (const gvector& a, const gvector& b) noexcept {
+    return dot(normalization(a), normalization(b));
+}
 
 #if _INLINE_FLAG
 // multiplication of gvector-row and sq_matrix
