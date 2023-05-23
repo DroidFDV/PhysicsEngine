@@ -26,7 +26,7 @@ struct gvector;
 struct sq_matrix;
 
 // https://stackoverflow.com/questions/17333/what-is-the-most-effective-way-for-float-and-double-comparison
-bool _AlmostEqual(float A, float B, int maxUlps = kMaxUlps) //  Ulps - Units in the Last Place
+inline bool _AlmostEqual(float A, float B, int maxUlps = kMaxUlps) //  Ulps - Units in the Last Place
 {    
     axc::_AXC_VERIFY(maxUlps > 0 && maxUlps < 4 * 1024 * 1024, "_AlmostEqual: invalid maxUlps");
 
