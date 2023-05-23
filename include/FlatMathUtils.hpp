@@ -139,7 +139,7 @@ struct gvector {
 #endif // !_INLINE_FLAG 
 
     // Euclidean norm of gvector 
-    float length() const noexcept {
+    float norm() const noexcept {
         return sqrtf(Xcoord * Xcoord + Ycoord * Ycoord);
     }
 
@@ -389,4 +389,4 @@ inline float random(float _LowerBound = -1.0f, float _UpperBound = 1.0f) noexcep
 
 _MATH_END // END namespace math
 
-#endif
+#endif // MATHUTILS_H
