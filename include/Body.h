@@ -8,12 +8,12 @@
 
 struct Body {
 
-    Body() = default;
+    Body();
 
 // 
-    void set (const _math::gvector& w, float M);
+    void set (const _math::gvector& _Width, float _Mass) noexcept;
 
-    void addForce (const _math::gvector& _Force) { force += _Force; }
+    void addForce (const _math::gvector& _Force) noexcept;
     
     
     _math::gvector width;
