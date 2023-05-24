@@ -156,7 +156,7 @@ struct sq_matrix {
     
     explicit sq_matrix() {}
 
-    // constructor (the matrix that defines the rotation on a given angle)
+    // constructor (the matrix that defines the rotation on a given angle:degree)
     explicit sq_matrix (float angle) noexcept {
         float cos_rot = cosf(angle);
         float sin_rot = sinf(angle);
@@ -277,14 +277,14 @@ inline gvector get_normal (const gvector& _gvector) noexcept {
 }
 
 //
-inline gvector normalization (const gvector& _gvector) noexcept {
+inline gvector normalize (const gvector& _gvector) noexcept {
     float length = _gvector.norm();
     return gvector(_gvector.Xcoord / length, _gvector.Ycoord / length);
 }
 
 //
 inline float get_angle (const gvector& a, const gvector& b) noexcept {
-    return dot(normalization(a), normalization(b));
+    return dot(normalize(a), normalize(b));
 }
 
 #if _INLINE_FLAG
