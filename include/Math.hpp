@@ -7,6 +7,7 @@
 
 #include <math.h>
 #include <float.h>
+#include <type_traits>
 #include "Utils.hpp"
 // #include <assert.h>
 // #include <stdlib.h> 
@@ -122,8 +123,11 @@ struct Gvector {
     float norm() const noexcept {
         return sqrtf(Xcoord * Xcoord + Ycoord * Ycoord);
     }
-
-
+    
+    //
+    bool is_null() const noexcept {
+        return AlmostEqual(Xcoord, Ycoord);
+    }
 
     float Xcoord;
     float Ycoord;
@@ -312,6 +316,72 @@ inline SQmatrix transpose (const SQmatrix& sqmatrix) noexcept {
                          Gvector(sqmatrix.col1.Ycoord, sqmatrix.col2.Ycoord)
                          );
 }
+
+
+
+struct Point {
+   
+    Point (float x = 0, float y = 0) noexcept : Coords(x,y) {}
+    
+    Point (const Gvector& gvector) noexcept : Coords(gvector) {}
+
+    Point& set (float x, float y) noexcept {
+        Coords.Xcoord = x;
+        Coords.Ycoord = y;
+        return *this;
+    }
+
+    //
+    Point rotate (const Point& Origin, float Angle) const noexcept {
+        SQmatrix RotMatrix(Angle);
+        return Point( (RotMatrix * (Coords - Origin.Coords)) + Origin.Coords);
+    }
+
+    //
+    Point rotate (const Point& Origin, const SQmatrix& RotMatrix) const noexcept {
+        return Point( (RotMatrix * (Coords - Origin.Coords)) + Origin.Coords);
+    }
+
+
+
+    Gvector Coords;
+};
+
+
+
+struct Line {
+
+    Line (const Point& a, Point& b) noexcept : 
+        A(a),
+        B(b),
+        direction(B.Coords.Xcoord - A.Coords.Xcoord, B.Coords.Ycoord - B.Coords.Ycoord)
+    {}
+
+    // TODO: check correctness of the DirVector (!= 0) within template
+    // mb create a struct null_vector??
+    // Line (const Point& a, const Gvector& DirVector) :
+    //     A(a),
+    // {}
+
+    // TODO check DirVector != 0
+    Line (const Gvector& DirVector) : 
+        A(0,0),
+        B(DirVector.Xcoord, DirVector.Xcoord),
+        direction(DirVector) 
+    {}
+
+    Line rotate (const Point& Origin, float angle) noexcept {
+        SQmatrix RotMatrix(angle);
+        Point _A ( A.rotate(Origin, RotMatrix) );
+        Point _B ( B.rotate(Origin, RotMatrix) );
+
+        return Line (_A, _B);
+    }
+
+    Point   A;
+    Point   B;
+    Gvector direction; 
+};
 
 
 
