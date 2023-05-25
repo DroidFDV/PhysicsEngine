@@ -8,6 +8,8 @@
 #include <math.h>
 #include <float.h>
 #include <type_traits>
+#include <vector>
+
 #include "Utils.hpp"
 // #include <assert.h>
 // #include <stdlib.h> 
@@ -52,7 +54,7 @@ inline bool AlmostEqual (float A, float B, int maxUlps = kMaxUlps) //  Ulps - Un
 struct Gvector {
 
     // constructor
-    Gvector (float x = 0, float y = 0) noexcept : Xcoord(x), Ycoord(y) {}
+    Gvector (float x = 0.0f, float y = 0.0f) noexcept : Xcoord(x), Ycoord(y) {}
 
     // copy constructor
     Gvector (const Gvector& _Other) noexcept = default;
@@ -60,8 +62,8 @@ struct Gvector {
     // move constructor
     Gvector (Gvector&& _Other) noexcept : Xcoord(_Other.Xcoord), Ycoord(_Other.Ycoord) {
         // ~_Right; // TODO: it's really bad to call destructor explicitly
-        _Other.Xcoord = 0;
-        _Other.Ycoord = 0;
+        _Other.Xcoord = 0.0f;
+        _Other.Ycoord = 0.0f;
     }
 
     // copy assigment
@@ -73,8 +75,8 @@ struct Gvector {
             Xcoord = _Rhs.Xcoord;
             Ycoord = _Rhs.Ycoord;
 
-            _Rhs.Xcoord = 0;
-            _Rhs.Ycoord = 0;
+            _Rhs.Xcoord = 0.0f;
+            _Rhs.Ycoord = 0.0f;
         }
 
         return *this;
@@ -241,7 +243,7 @@ struct SQmatrix {
     
     //
     bool is_invertible() const noexcept {
-        return !( AlmostEqual(this->det(), 0) );
+        return !( AlmostEqual(this->det(), 0.0f) );
     } 
     
     
@@ -321,7 +323,7 @@ inline SQmatrix transpose (const SQmatrix& sqmatrix) noexcept {
 
 struct Point {
    
-    Point (float x = 0, float y = 0) noexcept : Coords(x,y) {}
+    Point (float x = 0.0f, float y = 0.0f) noexcept : Coords(x,y) {}
     
     Point (const Gvector& gvector) noexcept : Coords(gvector) {}
 
