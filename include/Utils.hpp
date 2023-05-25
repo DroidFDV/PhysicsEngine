@@ -1,3 +1,8 @@
+//
+
+#ifndef UTILS_H
+#define UTILS_H
+
 #include <cstdlib>
 #include <iostream>
 
@@ -7,14 +12,14 @@
 #define _STD       ::std::
 
 
-_AXC_BEGIN
+_AXC_BEGIN // BEGIN namespace axc
 
 inline void _VERIFY (bool expression, const char* msg) {
     if (expression == true)
     {
-        std::cerr << '\n===================================================' 
-            << msg 
-            << '\n===================================================';
+        std::cerr << '\n' << "===================================="
+                << msg 
+            << '\n' << "====================================";
         std::exit(134);
     }
 }
@@ -31,4 +36,6 @@ inline void swap (_Ty& _Left, _Ty& _Right) noexcept {
     } 
 }
 
-_AXC_END
+_AXC_END // END namespace axc
+
+#endif // UTILS_H
