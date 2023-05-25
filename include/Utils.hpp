@@ -9,7 +9,7 @@
 
 _AXC_BEGIN
 
-inline void _AXC_VERIFY (bool expression, const char* msg) {
+inline void _VERIFY (bool expression, const char* msg) {
     if (expression == true)
     {
         std::cerr << '\n===================================================' 
@@ -23,7 +23,7 @@ template <
     class _Ty
 >
 inline void swap (_Ty& _Left, _Ty& _Right) noexcept {
-    if (addresof(_Left) != addresof(_Right))
+    if (addresof(_Left) != addresof(_Right)) 
     {
         _Ty _Tmp = move(_Left);
         _Left    = move(_Right); 
