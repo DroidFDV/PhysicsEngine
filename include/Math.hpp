@@ -321,32 +321,28 @@ inline SQmatrix transpose (const SQmatrix& sqmatrix) noexcept {
 
 
 
-struct Point {
+struct Point : Gvector {
    
-    Point (float x = 0.0f, float y = 0.0f) noexcept : Coords(x,y) {}
+    Point (float x = 0.0f, float y = 0.0f) noexcept : Gvector(x,y) {}
     
-    Point (const Gvector& gvector) noexcept : Coords(gvector) {}
+    Point (const Gvector& gvector) noexcept : Gvector(gvector) {}
 
     Point& set (float x, float y) noexcept {
-        Coords.Xcoord = x;
-        Coords.Ycoord = y;
+        Xcoord = x;
+        Ycoord = y;
         return *this;
     }
 
     //
     Point rotate (const Point& Origin, float Angle) const noexcept {
         SQmatrix RotMatrix(Angle);
-        return Point( (RotMatrix * (Coords - Origin.Coords)) + Origin.Coords);
+        return Point( (RotMatrix * (*this - Origin)) + Origin );
     }
 
     //
     Point rotate (const Point& Origin, const SQmatrix& RotMatrix) const noexcept {
-        return Point( (RotMatrix * (Coords - Origin.Coords)) + Origin.Coords);
+        return Point( (RotMatrix * (*this - Origin)) + Origin );
     }
-
-
-
-    Gvector Coords;
 };
 
 
@@ -356,7 +352,7 @@ struct Line {
     Line (const Point& a, Point& b) noexcept : 
         begin(a),
         end(b),
-        direction(end.Coords.Xcoord - begin.Coords.Xcoord, end.Coords.Ycoord - end.Coords.Ycoord)
+        direction(end.Xcoord - begin.Xcoord, end.Ycoord - end.Ycoord)
     {}
 
     // TODO: check correctness of the DirVector (!= 0) within template
