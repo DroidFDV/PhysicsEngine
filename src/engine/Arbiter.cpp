@@ -19,7 +19,7 @@ public:
         return _Objects.emplace_back(Verlet(position, radius));
     }
 
-    void update(float dt)
+    void update()
     {
         _Time += _FrameDt;
 
