@@ -1,10 +1,10 @@
 //
 
-#include "../Math.hpp"
-#include "../bodies/RigidBody.h"
-
 #ifndef OBB_H
 #define OBB_H
+
+#include "../Math.hpp"
+#include "../bodies/RigidBody.h"
 
 
 
