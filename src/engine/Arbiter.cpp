@@ -1,6 +1,11 @@
+#ifndef ARBITER_H
+#define ARBITER_H
+
 
 #include "../../include/Math.hpp"
 #include "../../include/bodies/Verlet.hpp"
+
+
 
 using namespace _math;
 
@@ -155,3 +160,5 @@ private:
     std::vector<Verlet> _Objects;
 
 };
+
+#endif 
