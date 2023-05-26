@@ -354,34 +354,34 @@ struct Point {
 struct Line {
 
     Line (const Point& a, Point& b) noexcept : 
-        A(a),
-        B(b),
-        direction(B.Coords.Xcoord - A.Coords.Xcoord, B.Coords.Ycoord - B.Coords.Ycoord)
+        begin(a),
+        end(b),
+        direction(end.Coords.Xcoord - begin.Coords.Xcoord, end.Coords.Ycoord - end.Coords.Ycoord)
     {}
 
     // TODO: check correctness of the DirVector (!= 0) within template
     // mb create a struct null_vector??
     // Line (const Point& a, const Gvector& DirVector) :
-    //     A(a),
+    //     begin(a),
     // {}
 
     // TODO check DirVector != 0
     Line (const Gvector& DirVector) : 
-        A(0,0),
-        B(DirVector.Xcoord, DirVector.Xcoord),
+        begin(0,0),
+        end(DirVector.Xcoord, DirVector.Xcoord),
         direction(DirVector) 
     {}
 
     Line rotate (const Point& Origin, float angle) noexcept {
         SQmatrix RotMatrix(angle);
-        Point _A ( A.rotate(Origin, RotMatrix) );
-        Point _B ( B.rotate(Origin, RotMatrix) );
+        Point _Begin ( begin.rotate(Origin, RotMatrix) );
+        Point _End ( end.rotate(Origin, RotMatrix) );
 
-        return Line (_A, _B);
+        return Line (_Begin, _End);
     }
 
-    Point   A;
-    Point   B;
+    Point   begin;
+    Point   end;
     Gvector direction; 
 };
 
