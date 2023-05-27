@@ -1,5 +1,3 @@
-// Math support structs and functions
-
 
 #ifndef MATH_H
 #define MATH_H
@@ -438,3 +436,10 @@ inline float random(float _LowerBound = -1.0f, float _UpperBound = 1.0f) noexcep
 _MATH_END // END namespace math
 
 #endif // MATH_H
+    
+////////////////////////////////////////////////////////////
+/// \defgroup math Mathematical Library
+///
+/// Math support structs and functions
+///
+////////////////////////////////////////////////////////////
