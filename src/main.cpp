@@ -25,11 +25,11 @@ int main()
 
     // Set simulation attributes
     const float          object_spawn_delay    = 0.00025f;
-    const float          object_spawn_speed    = 600.0f;
-    const _math::Gvector object_spawn_position = {500.0f, 200.0f};
+    const float          object_spawn_speed    = 1200.0f;
+    const sf::Vector2f   object_spawn_position = {500.0f, 200.0f};
     const float          object_min_radius     = 1.0f;
     const float          object_max_radius     = 20.0f;
-    const uint32_t       max_objects_count     = 10;
+    const uint32_t       max_objects_count     = 1000;
     const float          max_angle             = 1.0f;
 
     sf::Clock clock;
@@ -52,8 +52,8 @@ int main()
             auto& object      = Arbiter.addObject(object_spawn_position, _math::random(object_min_radius, object_max_radius));
             const float t     = Arbiter.getTime();
             const float angle = max_angle * sinf(t) + _math::PI * 0.5f;
-            Arbiter.setObjectVelecity( object, object_spawn_speed * _math::Gvector{cosf(angle), sinf(angle)} );
-            object.color = sf::Color::White;
+            Arbiter.setObjectVelecity( object, object_spawn_speed * sf::Vector2f{cosf(angle), sinf(angle)} );
+            object.color = sf::Color::Green;
         }
 
         Arbiter.update();

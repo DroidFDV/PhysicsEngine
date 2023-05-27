@@ -21,7 +21,7 @@
 
 _MATH_BEGIN // BEGIN namespace math
 
-constexpr const float   PI       = 3.14159265358979323846264f;
+constexpr const float   PI       = 3.1415926535f;
 static    const int32_t kMaxUlps = 5;
 
 

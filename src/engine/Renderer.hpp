@@ -13,6 +13,7 @@ public:
 {
             const std::vector<float> Constraint = Arbiter.getConstraint();
             sf::CircleShape ConstraintBackground { Constraint[2] };
+
             ConstraintBackground.setOrigin(Constraint[2], Constraint[2]);
             ConstraintBackground.setFillColor(sf::Color::Black);
             ConstraintBackground.setPosition(Constraint[0], Constraint[1]);
@@ -26,7 +27,7 @@ public:
 
             for (const auto& object : ObjectsVector) 
             {
-                ObjectCircle.setPosition(object.posNow.Xcoord, object.posNow.Ycoord);
+                ObjectCircle.setPosition(object.posNow.x, object.posNow.y);
                 ObjectCircle.setScale(object.radius, object.radius);
                 ObjectCircle.setFillColor(object.color);
                 _Target.draw(ObjectCircle);
