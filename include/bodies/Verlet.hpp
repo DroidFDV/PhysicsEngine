@@ -5,7 +5,6 @@
 #define VERLET_H 
 
 #ifndef __has_cpp_attribute
-// Если компилятор не поддерживает __has_cpp_attribute, то всегда сообщаем, что атрибута нет.
 #define __has_cpp_attribute(name) 0
 #endif
 
@@ -49,8 +48,7 @@ struct Verlet {
         posPrev -= _Velocity * dt;
     }
 
-    [[nodiscard]]
-    Gvector getVelocity (float dt) const {
+    [[nodiscard]] Gvector getVelocity (float dt) const {
         return Gvector( (posNow - posPrev) * (1 / dt) );
 
     }
