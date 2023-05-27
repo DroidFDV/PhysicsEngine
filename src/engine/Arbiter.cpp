@@ -15,14 +15,13 @@ public:
     Arbiter() = default;
    
     // ??
-    Verlet& addObject (Gvector position, float radius) {
+    Verlet& addObject (sf::Vector2f position, float radius) {
         return _Objects.emplace_back(position, radius);
     }
 
     void update()
     {
         _Time += _FrameDt;
-
         const float stepDt = getStepDt();
         for (uint32_t i{_SubSteps}; i--;) {
             applyGravity();
@@ -38,7 +37,7 @@ public:
     }
 
     // ??
-    void setConstraint(Gvector position, float radius) // or just value Gvector?
+    void setConstraint(sf::Vector2f position, float radius) // or just value sf::Vector2f?
     { 
         _ConstraintCenter = position;
         _ConstraintRadius = radius;
@@ -50,7 +49,7 @@ public:
     }  
     
     // ??
-    void setObjectVelecity(Verlet& object, Gvector velocity) 
+    void setObjectVelecity(Verlet& object, sf::Vector2f velocity) 
     {
         object.setVelocity(velocity, getStepDt());
     }
@@ -65,8 +64,8 @@ public:
     [[nodiscard]] std::vector<float> getConstraint() const 
     {
         std::vector<float> result {
-            _ConstraintCenter.Xcoord,
-            _ConstraintCenter.Ycoord,
+            _ConstraintCenter.x,
+            _ConstraintCenter.y,
             _ConstraintRadius
         };
 
@@ -89,9 +88,9 @@ public:
     }
 
 private:
-    
+
     void checkCollisions(float dt) 
-{
+    {
         const float response_coef = 0.75f;
         const uint64_t objectCount = _Objects.size();
 
@@ -101,14 +100,14 @@ private:
             for (uint64_t j = i + 1; j < objectCount; j++) 
             {
                 Verlet& verletB = _Objects[j];
-                const Gvector v = verletA.posNow - verletB.posNow;
-                const float dist2 = dot(v, v); 
+                const sf::Vector2f v = verletA.posNow - verletB.posNow;
+                const float dist2 = v.x * v.x + v.y * v.y; 
                 const float min_dist = verletA.radius + verletB.radius;
 
                 if (dist2 < min_dist * min_dist)
                 {
                     const float dist = sqrtf(dist2);
-                    const Gvector n = v * (1 / dist);
+                    const sf::Vector2f n = v * (1 / dist);
                     const float massRatioA = verletA.radius / (verletA.radius + verletB.radius);
 
                     const float massRatioB = verletB.radius / (verletA.radius + verletB.radius);
@@ -133,11 +132,11 @@ private:
     {
         for (auto& object : _Objects)
         {
-            const Gvector pos  = _ConstraintCenter - object.posNow;
-            const float   dist = pos.norm();
+            const sf::Vector2f pos  = _ConstraintCenter - object.posNow;
+            const float   dist = sqrtf( pos.x * pos.x + pos.y * pos.y);
 
             if (dist > (_ConstraintRadius - object.radius)) {
-                const Gvector n = pos * (1 / dist);
+                const sf::Vector2f n = pos * (1 / dist);
                 object.posNow = _ConstraintCenter - n * (_ConstraintRadius - object.radius);
             }
         }
@@ -156,8 +155,8 @@ private:
 private:
 
     uint32_t            _SubSteps         = 1;
-    Gvector             _Gravity          = {0.0f, 1000.0f};
-    Point               _ConstraintCenter;
+    sf::Vector2f        _Gravity          = {0.0f, 1000.0f};
+    sf::Vector2f        _ConstraintCenter;
     float               _ConstraintRadius = 100.0f;
     float               _Time             = 0.0f;
     float               _FrameDt          = 0.0f;
