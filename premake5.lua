@@ -6,19 +6,21 @@ workspace "Main Workspace"
 project "Physics Engine"
     filename "PhysicsEngine"
     location "build/PhysicsEngine"
-    kind "WindowApp"
+    kind "ConsoleApp"
     language "C++"
     -- files { "**.h", "**.hpp", "**.cpp" }
-    files { 
+    files {
         "include/Utils.hpp",
         "include/Math.hpp",
         "include/bodies/*.h",
         "include/bodies/*.hpp",
         "include/primitives/*.hpp",
         "src/main.cpp",
-        "src/engine/**.cpp",
+        "src/engine/physics/bodies/**.cpp",
         "src/engine/**.hpp"
     }
+    libdirs { os.findlib("SFML")}
+    links { "sfml-system", "sfml-window", "sfml-graphics" }
     filter { "configurations:Debug" }
         defines { "DEBUG" }
         symbols "On"
