@@ -16,7 +16,7 @@ public:
    
     // ??
     Verlet& addObject (Gvector position, float radius) {
-        return _Objects.emplace_back(Verlet(position, radius));
+        return _Objects.emplace_back(position, radius);
     }
 
     void update()
@@ -24,7 +24,7 @@ public:
         _Time += _FrameDt;
 
         const float stepDt = getStepDt();
-        for (uint32_t i = _SubSteps; i > 0; i--) {
+        for (uint32_t i{_SubSteps}; i--;) {
             applyGravity();
             checkCollisions(stepDt);
             applyConstraint();
@@ -37,8 +37,8 @@ public:
         _FrameDt = 1.0f / static_cast<float>(rate);
     }
 
-    //
-    void setConstraint(const Gvector& position, float radius) // or just value Gvector?
+    // ??
+    void setConstraint(Gvector position, float radius) // or just value Gvector?
     { 
         _ConstraintCenter = position;
         _ConstraintRadius = radius;
@@ -50,16 +50,18 @@ public:
     }  
     
     // ??
-    void setObjectVelecity(Verlet& object, const Gvector& velocity) 
+    void setObjectVelecity(Verlet& object, Gvector velocity) 
     {
         object.setVelocity(velocity, getStepDt());
     }
 
+    // ??
     [[nodiscard]] const std::vector<Verlet>& getObjects() const 
     {
         return _Objects;
     }
-
+    
+    // ??
     [[nodiscard]] std::vector<float> getConstraint() const 
     {
         std::vector<float> result {
@@ -67,6 +69,8 @@ public:
             _ConstraintCenter.Ycoord,
             _ConstraintRadius
         };
+
+        return result;
     }
 
     [[nodiscard]] uint64_t getObjectsCount() const
@@ -110,8 +114,8 @@ private:
                     const float massRatioB = verletB.radius / (verletA.radius + verletB.radius);
                     const float delta = 0.5f * response_coef * (dist - min_dist);
 
-                    verletA.posNow -= n * (massRatioA * delta);
-                    verletB.posNow += n * (massRatioB * delta);
+                    verletA.posNow -= n * (massRatioB * delta);
+                    verletB.posNow += n * (massRatioA * delta);
                 }
             }
         }

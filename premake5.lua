@@ -1,11 +1,10 @@
-workspace "Main Workspace"
-    filename "MainWorkspace"
+workspace "MainWorkspace"
     location "build"
     configurations { "Debug", "Release" }
 
-project "Physics Engine"
-    filename "PhysicsEngine"
-    location "build/PhysicsEngine"
+project "Engine"
+    filename ("engine")
+    location "build/Core"
     kind "ConsoleApp"
     language "C++"
     cppdialect "C++17"
