@@ -24,6 +24,7 @@ then in directory build use make.  Or use script `./build.sh` and run `./build/C
 Not available now.
 
 # Roadmap
+
 -[x] Rewrite Gvector
 -[x] Separate math and structures
 -[] Abstract class for primitives
