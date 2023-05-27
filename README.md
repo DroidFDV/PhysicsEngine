@@ -30,5 +30,7 @@ Not available now.
 - [] Abstract class for primitives
 - [] Implement primities
 - [] Optimize Collision Detection 
+- [] build.sh
+- [] build.bat
 - [] Write documentation 
 - [] Write wiki
