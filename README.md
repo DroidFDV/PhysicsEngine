@@ -25,10 +25,10 @@ Not available now.
 
 # Roadmap
 
--[x] Rewrite Gvector
--[x] Separate math and structures
--[] Abstract class for primitives
--[] Implement primities
--[] Optimize Collision Detection 
--[] Write documentation 
--[] Write wiki
+- [x] Rewrite Gvector
+- [x] Separate math and structures
+- [] Abstract class for primitives
+- [] Implement primities
+- [] Optimize Collision Detection 
+- [] Write documentation 
+- [] Write wiki
