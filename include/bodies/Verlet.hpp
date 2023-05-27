@@ -20,7 +20,7 @@ struct Verlet {
     Verlet() = default;
     
     // ??
-    Verlet (const Gvector& _Position, float _Radius) noexcept : 
+    Verlet (Gvector _Position, float _Radius) noexcept : 
         posNow(_Position),
         posPrev(_Position),
         radius(_Radius),
@@ -39,12 +39,12 @@ struct Verlet {
     }
 
     // ??
-    void setVelocity (const Gvector& _Velocity, float dt) noexcept {
+    void setVelocity (Gvector _Velocity, float dt) noexcept {
         posPrev = posNow - (_Velocity * dt);
     }
 
     // ??
-    void addVelocity (const Gvector& _Velocity, float dt) noexcept {
+    void addVelocity (Gvector _Velocity, float dt) noexcept {
         posPrev -= _Velocity * dt;
     }
 

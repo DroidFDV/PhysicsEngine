@@ -4,10 +4,12 @@
 class Renderer
 {
 public:
-        
+    
+    // ??
     explicit Renderer(sf::RenderTarget& target) : _Target(target) {}
 
-    void render(const Arbiter& Arbiter) 
+    // ??
+    void render(const Arbiter& Arbiter) const
 {
             const std::vector<float> Constraint = Arbiter.getConstraint();
             sf::CircleShape ConstraintBackground { Constraint[2] };
@@ -32,6 +34,5 @@ public:
         }
 
 private:
-
-        sf::RenderTarget& _Target;
+    sf::RenderTarget& _Target;
 };
