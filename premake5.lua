@@ -14,12 +14,16 @@ project "Engine"
     files {
         "include/Utils.hpp",
         "include/Math.hpp",
-        "include/bodies/*.h",
-        "include/bodies/*.hpp",
-        "include/primitives/*.hpp",
-        "src/main.cpp",
-        "src/engine/physics/bodies/**.cpp",
-        "src/engine/**.hpp"
+        -- "include/bodies/*.h",
+        -- "include/bodies/*.hpp",
+        -- "include/primitives/*.hpp",
+        -- "src/main.cpp",
+        -- "src/engine/physics/bodies/**.cpp",
+        -- "src/engine/**.hpp"
+        "include/bodies/Verlet.hpp",
+        "src/engine/Arbiter.cpp",
+        "src/engine/Renderer.hpp",
+        "src/main.cpp"
     }
 
     includedirs {
