@@ -42,8 +42,11 @@ struct Gvector {
     /// \param _Rhs Gvector to copy assigment
     ///
     ////////////////////////////////////////////////////////////
-    Gvector& operator= (const Gvector& _Rhs) noexcept = default;
-
+    Gvector& operator= (const Gvector& _Rhs) noexcept {
+        Xcoord = _Rhs.Xcoord;
+        Ycoord = _Rhs.Ycoord;
+        return *this;
+    }
 
     ////////////////////////////////////////////////////////////
     /// \brief Function to set or change vector coordinates
