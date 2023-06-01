@@ -171,7 +171,7 @@ inline Gvector& operator*= (Gvector& _Lhs, float _Scal) noexcept {
 ///
 ////////////////////////////////////////////////////////////
 inline Gvector operator+ (const Gvector& _Lhs, const Gvector& _Rhs) noexcept {
-    return Gvector(_Rhs.Xcoord + _Lhs.Xcoord, _Rhs.Ycoord + _Lhs.Ycoord);
+    return Gvector(_Lhs.Xcoord + _Rhs.Xcoord, _Lhs.Ycoord + _Rhs.Ycoord);
 }
 
 ////////////////////////////////////////////////////////////
@@ -185,7 +185,7 @@ inline Gvector operator+ (const Gvector& _Lhs, const Gvector& _Rhs) noexcept {
 ///
 ////////////////////////////////////////////////////////////
 inline Gvector operator- (const Gvector& _Lhs, const Gvector& _Rhs) noexcept {
-    return Gvector(_Rhs.Xcoord - _Lhs.Xcoord, _Rhs.Ycoord - _Lhs.Ycoord);
+    return Gvector(_Lhs.Xcoord - _Rhs.Xcoord, _Lhs.Ycoord - _Rhs.Ycoord);
 }
 
 ////////////////////////////////////////////////////////////
