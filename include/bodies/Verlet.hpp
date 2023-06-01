@@ -11,15 +11,15 @@
 #include <cmath>
 #include <SFML/Graphics.hpp>
 #include "../Math.hpp"
-
+#include "../structures/Gvector.hpp"
 
 using namespace _math;
-
+using namespace st;
 struct Verlet {
 
     Verlet() = default;
     
-    Verlet (const sf::Vector2f& _position, float _radius) noexcept : 
+    Verlet (const Gvector& _position, float _radius) noexcept : 
         posNow(_position),
         posPrev(_position),
         radius(_radius),
@@ -27,34 +27,34 @@ struct Verlet {
     {}
 
     void updatePosition (float dt) {
-        const sf::Vector2f shift = posNow - posPrev;
+        const Gvector shift = posNow - posPrev;
         posPrev = posNow;
         posNow = posNow + shift + acceleration * dt * dt;
         acceleration = {};
     }
 
-    void accelerate (const sf::Vector2f& acc) {
+    void accelerate (const Gvector& acc) {
         acceleration += acc;
     }
 
     // ??
-    void setVelocity (const sf::Vector2f& velocity, float dt) noexcept {
+    void setVelocity (const Gvector& velocity, float dt) noexcept {
         posPrev = posNow - (velocity * dt);
     }
 
     // ??
-    void addVelocity (const sf::Vector2f& velocity, float dt) noexcept {
+    void addVelocity (const Gvector& velocity, float dt) noexcept {
         posPrev -= velocity * dt;
     }
 
-    [[nodiscard]] sf::Vector2f getVelocity (float dt) const {
-        return sf::Vector2f( (posNow - posPrev) * (1 / dt) );
+    [[nodiscard]] Gvector getVelocity (float dt) const {
+        return Gvector( (posNow - posPrev) * (1 / dt) );
 
     }
 
-    sf::Vector2f posNow;
-    sf::Vector2f posPrev;
-    sf::Vector2f acceleration;
+    Gvector posNow;
+    Gvector posPrev;
+    Gvector acceleration;
     float radius = 10.0f;
     sf::Color color = sf::Color::Black; 
 };

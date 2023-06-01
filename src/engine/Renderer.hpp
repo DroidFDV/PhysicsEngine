@@ -26,7 +26,7 @@ public:
         const auto& ObjectsVector = Arbiter.getObjects();
 
         for (const Verlet& object : ObjectsVector) {
-            ObjectCircle.setPosition(object.posNow.x, object.posNow.y);
+            ObjectCircle.setPosition(object.posNow.Xcoord, object.posNow.Ycoord);
             ObjectCircle.setScale(object.radius, object.radius);
             ObjectCircle.setFillColor(object.color);
             _Target.draw(ObjectCircle);
