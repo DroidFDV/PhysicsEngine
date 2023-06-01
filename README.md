@@ -27,6 +27,7 @@ Not available now.
 
 - [x] Rewrite Gvector
 - [x] Separate math and structures
+- [ ] ?? Friction ??
 - [ ] Abstract class for primitives
 - [ ] Implement primities
 - [ ] Optimize Collision Detection 
