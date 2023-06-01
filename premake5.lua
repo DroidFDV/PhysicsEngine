@@ -21,7 +21,7 @@ project "Engine"
         -- "src/engine/physics/bodies/**.cpp",
         -- "src/engine/**.hpp"
         "include/bodies/Verlet.hpp",
-        "src/engine/Arbiter.cpp",
+        "src/engine/Arbiter.hpp",
         "src/engine/Renderer.hpp",
         "src/main.cpp"
     }
