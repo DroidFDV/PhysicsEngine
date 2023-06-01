@@ -136,8 +136,8 @@ private:
 private:
 
     uint32_t            _SubSteps         = 1;
-    Gvector        _Gravity          = {0.0f, 1000.0f};
-    Gvector        _ConstraintCenter;
+    Gvector             _Gravity          = {0.0f, 1000.0f};
+    Point               _ConstraintCenter;
     float               _ConstraintRadius = 100.0f;
     float               _Time             = 0.0f;
     float               _FrameDt          = 0.0f;

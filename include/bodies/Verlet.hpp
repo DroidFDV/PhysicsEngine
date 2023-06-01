@@ -12,6 +12,7 @@
 #include <SFML/Graphics.hpp>
 #include "../Math.hpp"
 #include "../structures/Gvector.hpp"
+#include "../structures/Point.hpp"
 
 using namespace _math;
 using namespace st;
@@ -52,10 +53,10 @@ struct Verlet {
 
     }
 
-    Gvector posNow;
-    Gvector posPrev;
+    Point   posNow;
+    Point   posPrev;
     Gvector acceleration;
-    float radius = 10.0f;
+    float   radius = 10.0f;
     sf::Color color = sf::Color::Black; 
 };
 
