@@ -14,16 +14,17 @@ public:
 
     Arbiter() = default;
    
-    // ??
-    Verlet& addObject (sf::Vector2f position, float radius) {
-        return _Objects.emplace_back(position, radius);
+    Verlet& addObject (const sf::Vector2f& position, float radius) {
+        Verlet newObject(position, radius);
+        _Objects.emplace_back(position, radius);
+        return _Objects.back();
     }
 
-    void update()
-    {
+    void update() {
         _Time += _FrameDt;
+
         const float stepDt = getStepDt();
-        for (uint32_t i{_SubSteps}; i--;) {
+        for ( uint32_t i = _SubSteps; i > 0; i-- ) {
             applyGravity();
             checkCollisions(stepDt);
             applyConstraint();
@@ -31,44 +32,33 @@ public:
         }
     }
 
-    void setSimulationUpdateRate(uint32_t rate) 
-    {
+    void setSimulationUpdateRate (uint32_t rate) {
         _FrameDt = 1.0f / static_cast<float>(rate);
     }
 
-    // ??
-    void setConstraint(sf::Vector2f position, float radius) // or just value sf::Vector2f?
-    { 
+    void setConstraint (const sf::Vector2f& position, float radius) {
         _ConstraintCenter = position;
         _ConstraintRadius = radius;
     }
 
-    void setSubStepsCount(uint32_t subSteps)
-    {
+    void setSubStepsCount (uint32_t subSteps) {
        _SubSteps = subSteps; 
     }  
     
-    // ??
-    void setObjectVelecity(Verlet& object, sf::Vector2f velocity) 
-    {
+    void setObjectVelecity (Verlet& object, const sf::Vector2f& velocity) {
         object.setVelocity(velocity, getStepDt());
     }
 
-    // ??
-    [[nodiscard]] const std::vector<Verlet>& getObjects() const 
-    {
+    [[nodiscard]] const std::vector<Verlet>& getObjects() const {
         return _Objects;
     }
     
-    // ??
-    [[nodiscard]] std::vector<float> getConstraint() const 
-    {
+    [[nodiscard]] std::vector<float> getConstraint() const {
         std::vector<float> result {
             _ConstraintCenter.x,
             _ConstraintCenter.y,
             _ConstraintRadius
         };
-
         return result;
     }
 
@@ -87,10 +77,10 @@ public:
         return _FrameDt / static_cast<float>(_SubSteps);
     }
 
+
 private:
 
-    void checkCollisions(float dt) 
-    {
+    void checkCollisions (float dt) {
         const float response_coef = 0.75f;
         const uint64_t objectCount = _Objects.size();
 
@@ -120,18 +110,14 @@ private:
         }
     }
 
-    void applyGravity() 
-    {
-        for (auto& object : _Objects) 
-        {
+    void applyGravity() {
+        for (auto& object : _Objects) {
             object.accelerate(_Gravity);
         }
     }
 
-    void applyConstraint() 
-    {
-        for (auto& object : _Objects)
-        {
+    void applyConstraint() {
+        for (auto& object : _Objects) {
             const sf::Vector2f pos  = _ConstraintCenter - object.posNow;
             const float   dist = sqrtf( pos.x * pos.x + pos.y * pos.y);
 
@@ -142,10 +128,8 @@ private:
         }
     }
 
-    void updateObjects(float dt) 
-    {
-        for (auto& object : _Objects) 
-        {
+    void updateObjects (float dt) {
+        for (auto& object : _Objects) {
             object.updatePosition(dt);
         }
     }

@@ -19,11 +19,10 @@ struct Verlet {
 
     Verlet() = default;
     
-    // ??
-    Verlet (sf::Vector2f _Position, float _Radius) noexcept : 
-        posNow(_Position),
-        posPrev(_Position),
-        radius(_Radius),
+    Verlet (const sf::Vector2f& _position, float _radius) noexcept : 
+        posNow(_position),
+        posPrev(_position),
+        radius(_radius),
         acceleration(0.0f, 0.0f)
     {}
 
@@ -34,18 +33,18 @@ struct Verlet {
         acceleration = {};
     }
 
-    void accelerate (sf::Vector2f acc) {
+    void accelerate (const sf::Vector2f& acc) {
         acceleration += acc;
     }
 
     // ??
-    void setVelocity (sf::Vector2f _Velocity, float dt) noexcept {
-        posPrev = posNow - (_Velocity * dt);
+    void setVelocity (const sf::Vector2f& velocity, float dt) noexcept {
+        posPrev = posNow - (velocity * dt);
     }
 
     // ??
-    void addVelocity (sf::Vector2f _Velocity, float dt) noexcept {
-        posPrev -= _Velocity * dt;
+    void addVelocity (const sf::Vector2f& velocity, float dt) noexcept {
+        posPrev -= velocity * dt;
     }
 
     [[nodiscard]] sf::Vector2f getVelocity (float dt) const {

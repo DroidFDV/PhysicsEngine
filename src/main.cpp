@@ -29,7 +29,7 @@ int main()
     const sf::Vector2f   object_spawn_position = {500.0f, 200.0f};
     const float          object_min_radius     = 1.0f;
     const float          object_max_radius     = 20.0f;
-    const uint32_t       max_objects_count     = 1000;
+    const uint32_t       max_objects_count     = 10;
     const float          max_angle             = 1.0f;
 
     sf::Clock clock;
