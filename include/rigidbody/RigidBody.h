@@ -1,39 +1,39 @@
-// simple class presenting an object
-
-
 #ifndef RIGIDBODY_H
 #define RIGIDBODY_H 
 
 
 #include "../Math.hpp"
-
+#include "../structures/Gvector.hpp"
+#include "../structures/Point.hpp"
 
 
 using namespace _math;
+using namespace _st;
+
 
 struct RigidBody {
 
     RigidBody();
 
-// 
-    void set (const Gvector& _Width, float _Mass) noexcept;
+    void set (const Gvector& width, float mass) noexcept;
 
-    void addForce (const Gvector& _Force) noexcept;
+    void applyForce (const Gvector& force) noexcept;
     
-    
-    Gvector width;
-    Point position;
-    float rotation;
+   
 
-    Gvector velocity;
-    float   angularVelocity;
+    // Gvector Width;
+    Point Position;
+    float Rotation;
 
-    Gvector force;
-    float   torque;
+    Gvector Velocity;
+    float   AngularVelocity;
 
-    float friction;
-    float mass, invMass;
-    float I, invI;
+    Gvector Force;
+    float   Torque;
+
+    // float Friction;
+    float Mass, InvMass;
+    float I, InvI;
 };
 
 #endif // RIGIDBODY_H 
