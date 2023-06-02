@@ -3,8 +3,9 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-#include <cstdlib>
+
 #include <iostream>
+
 
 #define _AXC_BEGIN namespace axc {
 #define _AXC_END   }
