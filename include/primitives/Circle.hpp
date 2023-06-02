@@ -6,16 +6,22 @@
 
 
 #include "../Math.hpp"
-#include "../bodies/RigidBody.h"
+#include "IShell.h"
 
 
+using namespace _math;
 
-struct Circle {
+
+class Circle : public IShell {
     
-    Circle (float _Radius = 1.0f) noexcept : radius(_Radius) {}
+    Circle (RigidBody* body, float radius = 1.0f) noexcept :
+        IShell(body),
+        Radius(radius)
+    {}
 
-    RigidBody* _Mybody;
-    float      radius;
+    ~Circle() override = default;
+
+    float Radius;
 };
 
 

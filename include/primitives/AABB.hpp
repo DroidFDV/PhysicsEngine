@@ -1,57 +1,70 @@
-//
-
 #ifndef AABB_H
 #define AABB_H
 
 
 #include "../Math.hpp"
-#include "../bodies/RigidBody.h"
-
+#include "IShell.h"
 
 
 using namespace _math;
 
-struct AABB {
-    
-    // using position = _Mybody->position;
-    
+
+// Box vertex and edge numbering:
+//
+//        ^ y
+//        |
+//        e1
+//   v2 ------ v1
+//    |        |
+// e2 |        | e4  --> x
+//    |        |
+//   v3 ------ v4
+//        e3
+//
+
+
+class AABB : public IShell {
+public:
+ 
     AABB (const Point& maxCorner, const Point& minCorner) noexcept :
-        size(maxCorner - minCorner),
-        _Mybody(nullptr)
+        IShell(nullptr),
+        Size(maxCorner - minCorner)
     {}
+   
+    ~AABB() override = default;
     
     //
     Point getMaxCorner() const {
-        _AXC _VERIFY (_Mybody == nullptr, "_Mybody is nullptr!");
-        return Point(_Mybody->position + size * 0.5f);
+        _AXC _VERIFY (Mybody == nullptr, "Mybody is nullptr!");
+        return Point(Mybody->Position + Size * 0.5f);
     } 
     
     //
     Point getMinCorner() const {
-        _AXC _VERIFY (_Mybody == nullptr, "_Mybody is nullptr!");
-        return Point(_Mybody->position - size * 0.5f);
+        _AXC _VERIFY (Mybody == nullptr, "Mybody is nullptr!");
+        return Point(Mybody->Position - Size * 0.5f);
     }
 
     //
-    std::vector<Point> getVertices() const {
-        _AXC _VERIFY (_Mybody == nullptr, "_Mybody is nullptr!");
+    std::vector<Point> getVertices() const
+    {
+        _AXC _VERIFY (Mybody == nullptr, "Mybody is nullptr!");
         std::vector<Point> vertices; 
 
-        Point minCorner = _Mybody->position + size * 0.5f;
-        Point maxCorner = _Mybody->position - size * 0.5f;
+        Point minCorner = Mybody->Position + Size * 0.5f;
+        Point maxCorner = Mybody->Position - Size * 0.5f;
        
-        vertices.push_back(minCorner);
-        vertices.push_back(Point(minCorner.Xcoord, maxCorner.Ycoord));
         vertices.push_back(maxCorner);
+        vertices.push_back(Point(minCorner.Xcoord, maxCorner.Ycoord));
+        vertices.push_back(minCorner);
         vertices.push_back(Point(maxCorner.Xcoord, minCorner.Ycoord));
 
         return vertices;
     }
     
-
     
-    RigidBody* _Mybody;
-    Gvector    size;   // [width, height]
+    
+    Gvector Size;   // [width, height]
 };
 
 
