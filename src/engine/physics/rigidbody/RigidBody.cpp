@@ -12,7 +12,7 @@ RigidBody::RigidBody() noexcept :
     InvMass(0.0f),
     InertiaTensor(FLT_MAX),
     InvI(0.0f),
-    Friction(0.2f),
+    // Friction(0.2f),
     Force(0.0f, 0.0f),
     Torque(0.0f)
 {}
@@ -28,7 +28,7 @@ void RigidBody::set (const Point& position, const Gvector& size, float mass) {
     
     Size     = size; 
     Mass     = mass; 
-    Friction = 0.2f;
+    // Friction = 0.2f;
     
     Force    = Gvector(0.0f, 0.f);
     Torque   = 0.0f;
