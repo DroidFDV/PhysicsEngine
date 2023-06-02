@@ -76,14 +76,6 @@ inline float abs (float var) noexcept {
     return var > 0.0f ? var : -var; 
 }
 
-// //
-// inline SQmatrix abs (const SQmatrix& sqmatrix) noexcept {
-//     return SQmatrix(
-//         _MATH abs(sqmatrix.col1),
-//         _MATH abs(sqmatrix.col2)
-//     );
-// }
-
 //
 inline float min (float a, float b) noexcept {
     return a > b ? b : a;
