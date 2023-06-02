@@ -22,8 +22,8 @@ struct SQmatrix {
         float cos_rot = cosf(angle);
         float sin_rot = sinf(angle);
 
-        col1.Xcoord = cos_rot;  col2.Xcoord = sin_rot;
-        col1.Ycoord = -sin_rot; col2.Ycoord = cos_rot;
+        Col1.Xcoord = cos_rot;  Col2.Xcoord = sin_rot;
+        Col1.Ycoord = -sin_rot; Col2.Ycoord = cos_rot;
     }
 
     // copy constructor 
@@ -33,7 +33,7 @@ struct SQmatrix {
     SQmatrix (SQmatrix&&) noexcept = default;
 
     // construct SQmatrix with two given gvectors
-    SQmatrix (const Gvector& _Gvec1, const Gvector& _Gvec2) noexcept : col1(_Gvec1), col2(_Gvec2) {}
+    SQmatrix (const Gvector& _Gvec1, const Gvector& _Gvec2) noexcept : Col1(_Gvec1), Col2(_Gvec2) {}
 
     // copy assigment 
     SQmatrix& operator= (const SQmatrix&) noexcept = default;
@@ -47,22 +47,22 @@ struct SQmatrix {
 
     //
     SQmatrix& operator+= (const SQmatrix& _Rhs) noexcept {
-        col1 += _Rhs.col1;
-        col2 += _Rhs.col2;
+        Col1 += _Rhs.Col1;
+        Col2 += _Rhs.Col2;
         return *this;
     }
 
     // 
     SQmatrix& operator-= (const SQmatrix& _Rhs) noexcept {
-        col1 -= _Rhs.col1;
-        col2 -= _Rhs.col2;
+        Col1 -= _Rhs.Col1;
+        Col2 -= _Rhs.Col2;
         return *this;
     }
 
     //
     SQmatrix& operator*= (float _Scal) noexcept {
-        col1 *= _Scal;
-        col2 *= _Scal;
+        Col1 *= _Scal;
+        Col2 *= _Scal;
         return *this;
     }
 
@@ -70,7 +70,7 @@ struct SQmatrix {
 
     // get a determinant of SQmatrix
     float det() const noexcept {
-        return col1.Xcoord * col2.Ycoord - col1.Ycoord * col2.Xcoord;
+        return Col1.Xcoord * Col2.Ycoord - Col1.Ycoord * Col2.Xcoord;
     }
 
     //
@@ -80,24 +80,24 @@ struct SQmatrix {
 
 
 
-    Gvector col1;
-    Gvector col2;
+    Gvector Col1;
+    Gvector Col2;
 };
 
-// multiplication of matrix and Gvector-column
-// return a vector-column 2x1
+// multiplication of matrix and Gvector-Column
+// return a vector-Column 2x1
 inline Gvector operator* (const SQmatrix& mat, const Gvector& gvec) noexcept {
     return Gvector(
-        mat.col1.Xcoord * gvec.Xcoord + mat.col2.Xcoord * gvec.Ycoord,
-        mat.col1.Ycoord * gvec.Xcoord + mat.col2.Ycoord * gvec.Ycoord
+        mat.Col1.Xcoord * gvec.Xcoord + mat.Col2.Xcoord * gvec.Ycoord,
+        mat.Col1.Ycoord * gvec.Xcoord + mat.Col2.Ycoord * gvec.Ycoord
     );
 }
 
 //
 inline SQmatrix operator+ (const SQmatrix& _Lhs, const SQmatrix& _Rhs) noexcept {
     return SQmatrix(
-        _Rhs.col1 + _Lhs.col1,
-        _Rhs.col2 + _Lhs.col2
+        _Rhs.Col1 + _Lhs.Col1,
+        _Rhs.Col2 + _Lhs.Col2
     );
 
     // SQmatrix _Tmp(_Lhs);
@@ -106,28 +106,35 @@ inline SQmatrix operator+ (const SQmatrix& _Lhs, const SQmatrix& _Rhs) noexcept 
 
 inline SQmatrix operator- (const SQmatrix& _Lhs, const SQmatrix& _Rhs) noexcept {
     return SQmatrix(
-        _Rhs.col1 - _Lhs.col1,
-        _Rhs.col2 - _Lhs.col2
+        _Rhs.Col1 - _Lhs.Col1,
+        _Rhs.Col2 - _Lhs.Col2
     );
 }
 
 //
 inline SQmatrix operator* (const SQmatrix& sqmatrix, float _Scal) noexcept {
     return SQmatrix(
-        sqmatrix.col1 * _Scal,
-        sqmatrix.col2 * _Scal
+        sqmatrix.Col1 * _Scal,
+        sqmatrix.Col2 * _Scal
     );
 }
 
 //
 inline SQmatrix operator* (const SQmatrix& a, const SQmatrix& b) noexcept {
     return SQmatrix(
-        a * b.col1,
-        a * b.col2
+        a * b.Col1,
+        a * b.Col2
     );
 }
 
 //
+inline SQmatrix abs (const SQmatrix& sqmatrix) noexcept {
+    return SQmatrix(
+        _ST abs(sqmatrix.Col1),
+        _ST abs(sqmatrix.Col2)
+    );
+}
+
 inline SQmatrix invert (const SQmatrix& sqmatrix) { 
     _AXC _VERIFY(sqmatrix.is_invertible(), "invert: det of matrix is 0!" );
 
@@ -135,20 +142,20 @@ inline SQmatrix invert (const SQmatrix& sqmatrix) {
     SQmatrix invert_matrix;
     float det_mult = 1.0f / det;
 
-    invert_matrix.col1.Xcoord =  det_mult * sqmatrix.col2.Ycoord;
-    invert_matrix.col1.Ycoord = -det_mult * sqmatrix.col1.Ycoord;
+    invert_matrix.Col1.Xcoord =  det_mult * sqmatrix.Col2.Ycoord;
+    invert_matrix.Col1.Ycoord = -det_mult * sqmatrix.Col1.Ycoord;
 
-    invert_matrix.col2.Xcoord = -det_mult * sqmatrix.col2.Xcoord;
-    invert_matrix.col2.Ycoord =  det_mult * sqmatrix.col1.Xcoord;
+    invert_matrix.Col2.Xcoord = -det_mult * sqmatrix.Col2.Xcoord;
+    invert_matrix.Col2.Ycoord =  det_mult * sqmatrix.Col1.Xcoord;
 
     return invert_matrix;
 }
 
 // transpose matrix  
 inline SQmatrix transpose (const SQmatrix& sqmatrix) noexcept {
-    return SQmatrix (Gvector(sqmatrix.col1.Xcoord, sqmatrix.col2.Xcoord),
-                     Gvector(sqmatrix.col1.Ycoord, sqmatrix.col2.Ycoord)
-                     );
+    return SQmatrix (Gvector(sqmatrix.Col1.Xcoord, sqmatrix.Col2.Xcoord),
+                     Gvector(sqmatrix.Col1.Ycoord, sqmatrix.Col2.Ycoord)
+                );
 }
 
 _ST_END // END namespace st
