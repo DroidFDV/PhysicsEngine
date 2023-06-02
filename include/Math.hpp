@@ -10,22 +10,19 @@
 ///
 ////////////////////////////////////////////////////////////
 
+
 #ifndef MATH_H
 #define MATH_H
 
 
-#include <math.h>
-#include <float.h>
-#include <type_traits>
-#include <vector>
-
 #include "Utils.hpp"
+#include "float.h"
+#include "vector"
 
 
 #define _MATH_BEGIN namespace _math {
 #define _MATH_END   }
 #define _MATH       ::_math::
-
 
 
 _MATH_BEGIN // BEGIN namespace _math
@@ -100,6 +97,7 @@ inline float random(float _LowerBound = -1.0f, float _UpperBound = 1.0f) noexcep
 } 
 
 _MATH_END // END namespace math
+
 
 #endif // MATH_H
 ////////////////////////////////////////////////////////////
