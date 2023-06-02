@@ -15,7 +15,7 @@
 #include "../structures/Point.hpp"
 
 using namespace _math;
-using namespace st;
+using namespace _st;
 struct Verlet {
 
     Verlet() = default;

@@ -3,9 +3,9 @@
 
 #include "../Math.hpp"
 
-#define _ST_BEGIN namespace st {
+#define _ST_BEGIN namespace _st {
 #define _ST_END   }
-#define _ST       ::st::
+#define _ST       ::_st::
 
 _ST_BEGIN
 using namespace _math;
