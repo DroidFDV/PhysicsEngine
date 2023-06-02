@@ -36,7 +36,7 @@ struct RigidBody {
         Gvector Size;
         float   Mass, InvMass;
         float   InertiaTensor, InvI;
-        float   Friction;
+        // float   Friction;
     ////////////////////////////////////////////////////////////
 
     ////////////////////////////////////////////////////////////
