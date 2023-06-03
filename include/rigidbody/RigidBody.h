@@ -17,7 +17,8 @@ union body_traits {
     enum class type {
         Circle,
         // Triangle,
-        Box
+        Box,
+        Constraint
     } bTy;
 
 };
@@ -25,7 +26,7 @@ union body_traits {
 
 struct RigidBody {
 
-    using traits = std::underlying_type<body_traits>;
+    // using traits = std::underlying_type<body_traits>;
     
     // TODO do i need constexpr here?
     RigidBody(body_traits::type bodyType) noexcept;
@@ -43,7 +44,7 @@ struct RigidBody {
     void addVelocity (const Gvector& velocity, float dt);
     
     
-    
+
     //////////////////////////////////////////////////////////// 
     /// Rigid body properties
         static body_traits BodyTraits;
@@ -51,11 +52,11 @@ struct RigidBody {
     /// State
         Point   Position;
         float   Rotation;
-        Gvector Velocity;
+        Gvector Velocity; // linear velocity
         float   AngularVelocity;
     
     /// Box properties
-        Gvector Size;
+        Gvector Size; // if BodyTraits.type == Circle => Size = (0, Radius)
         float   Mass, InvMass;
         float   InertiaTensor, InvI;
         // float   Friction;
