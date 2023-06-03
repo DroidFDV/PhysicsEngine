@@ -13,7 +13,8 @@ using namespace _math;
 
 
 class Circle : public IShell {
-    
+public:
+
     Circle (RigidBody* body, float radius = 1.0f) noexcept :
         IShell(body),
         Radius(radius)
@@ -21,6 +22,9 @@ class Circle : public IShell {
 
     ~Circle() override = default;
 
+
+
+public:
     float Radius;
 };
 
