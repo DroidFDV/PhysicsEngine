@@ -18,16 +18,26 @@ class OBB : public IShell {
     {}
     
     // TODO Size there incorrect
-    Point getMaxCorner() const {
+    Point getLocalMaxCorner() const {
         _AXC _VERIFY (Mybody == nullptr, "Mybody is nullptr!");
         return Point(Mybody->Position + Size * 0.5f);
     } 
     
     // TODO Size there incorrect
-    Point getMinCorner() const {
+    Point getLocalMinCorner() const {
         _AXC _VERIFY (Mybody == nullptr, "Mybody is nullptr!");
         return Point(Mybody->Position - Size * 0.5f);
     }
+
+    // TODO
+    // Point getWorldMaxCorner() const {
+    //       
+    // }
+
+    // TOOD
+    // Point getWorldMinCorner() const {
+    //
+    // }
 
     //
     std::vector<Point> getVertices() const 
