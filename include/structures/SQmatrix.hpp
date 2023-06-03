@@ -1,9 +1,13 @@
 #ifndef SQMATRIX_H
 #define SQMATRIX_H
 
+
+#include "../Math.hpp"
 #include "Gvector.hpp"
 
+
 _ST_BEGIN
+
 using namespace _math;
 
 ////////////////////////////////////////////////////////////

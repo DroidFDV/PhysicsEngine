@@ -18,7 +18,7 @@
 #include "Utils.hpp"
 #include "float.h"
 #include "vector"
-
+#include "cmath"
 
 #define _MATH_BEGIN namespace _math {
 #define _MATH_END   }
