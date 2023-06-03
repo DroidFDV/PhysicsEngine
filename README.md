@@ -28,8 +28,10 @@ Not available now.
 - [x] Rewrite Gvector
 - [x] Separate math and structures
 - [ ] ?? Friction ??
-- [ ] Abstract class for primitives
-- [ ] Implement primities
+- [x] Abstract class for primitives
+- [x] Implement primities
+- [ ] Force Managment
+- [ ] Collision Manifolds
 - [ ] Optimize Collision Detection 
 - [ ] build.sh
 - [ ] build.bat
