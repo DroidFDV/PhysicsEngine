@@ -53,9 +53,9 @@ class OBB : public IShell {
         vertices.push_back(minCorner);
         vertices.push_back(Point(maxCorner.Xcoord, minCorner.Ycoord));
 
-        if ( !AlmostEqual(Rotation, 0.0f) )
+        if ( !AlmostEqual(Mybody->Rotation, 0.0f) )
         {
-            SQmatrix RotMatrix(Rotation);
+            SQmatrix RotMatrix(Mybody->Rotation);
             for (Point& vertice : vertices) {
                 vertice = vertice.rotate(Mybody->Position, RotMatrix);
             }
@@ -64,10 +64,8 @@ class OBB : public IShell {
     }
     
     
-    
-    RigidBody* Mybody;
-    Gvector    Size;     // [width, height]
-    float      Rotation;
+
+    Gvector Size;     // [width, height]
 };
 
 
