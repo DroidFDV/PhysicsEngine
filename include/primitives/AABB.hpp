@@ -34,15 +34,23 @@ public:
     ~AABB() override = default;
     
     //
-    Point getMaxCorner() const {
+    Point getLocalMaxCorner() const {
         _AXC _VERIFY (Mybody == nullptr, "Mybody is nullptr!");
         return Point(Mybody->Position + Size * 0.5f);
     } 
     
     //
-    Point getMinCorner() const {
+    Point getLocalMinCorner() const {
         _AXC _VERIFY (Mybody == nullptr, "Mybody is nullptr!");
         return Point(Mybody->Position - Size * 0.5f);
+    }
+
+    Point getWorldMaxCorner() const {
+        return getLocalMaxCorner();
+    }
+
+    Point getWorldMinCorner() const {
+        return getLocalMinCorner();
     }
 
     //
