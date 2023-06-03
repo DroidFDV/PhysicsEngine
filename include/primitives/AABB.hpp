@@ -33,7 +33,8 @@ public:
    
     ~AABB() override = default;
     
-    //
+    // TODO i'am not shure what i want to get here: do i need
+    // to consider Mybody->Position as (0,0) here?
     Point getLocalMaxCorner() const {
         _AXC _VERIFY (Mybody == nullptr, "Mybody is nullptr!");
         return Point(Mybody->Position + Size * 0.5f);
