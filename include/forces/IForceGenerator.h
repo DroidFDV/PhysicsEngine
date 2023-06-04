@@ -2,13 +2,13 @@
 #define IFORCE_GEN_H
 
 
-struct RigidBody;
+#include "../rigidbody/RigidBody.h"
 
 
 class IForceGenerator {
 public:
 
-    virtual void updateForce(RigidBody* body, float dt) const = 0;
+    virtual void updateForce (RigidBody* body, float dt) const = 0;
 };
 
 
