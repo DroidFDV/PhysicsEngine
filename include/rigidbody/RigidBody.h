@@ -35,7 +35,7 @@ struct RigidBody {
 
     void set (const Point& position, const Gvector& size, float mass);
 
-    void applyForce (const Gvector& force) noexcept;
+    void updateForce (const Gvector& force) noexcept;
     
     void updatePosition (float dt); 
 

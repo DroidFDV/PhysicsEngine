@@ -48,6 +48,6 @@ void RigidBody::set (const Point& position, const Gvector& size, float mass) {
 }
 
 
-void RigidBody::applyForce (const Gvector& force) noexcept {
+void RigidBody::updateForce (const Gvector& force) noexcept {
     Force += force;
 }
