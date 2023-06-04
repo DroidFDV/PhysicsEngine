@@ -2,7 +2,7 @@
 #include "../../../../include/Utils.hpp"
 
 
-RigidBody::RigidBody(body_traits::type bodyType) noexcept :
+RigidBody::RigidBody (shape_traits::type shapeType) noexcept :
     Position(0.0f, 0.0f),
     Rotation(0.0f),
     Velocity(0.0f, 0.0f),
@@ -12,11 +12,11 @@ RigidBody::RigidBody(body_traits::type bodyType) noexcept :
     InvMass(0.0f),
     InertiaTensor(FLT_MAX),
     InvI(0.0f),
-    // Friction(0.2f),
+    Friction(0.2f),
     Force(0.0f, 0.0f),
     Torque(0.0f)
 { 
-    BodyTraits.bTy = bodyType;
+    ShapeTraits.shapeTy = shapeType;
     // BodyTraits.bTy(bodyType)
 }
     
@@ -31,7 +31,7 @@ void RigidBody::set (const Point& position, const Gvector& size, float mass) {
     
     Size     = size; 
     Mass     = mass; 
-    // Friction = 0.2f;
+    Friction = 0.2f;
     
     Force    = Gvector(0.0f, 0.f);
     Torque   = 0.0f;
@@ -48,6 +48,6 @@ void RigidBody::set (const Point& position, const Gvector& size, float mass) {
 }
 
 
-void RigidBody::updateForce (const Gvector& force) noexcept {
+void RigidBody::addForce (const Gvector& force) noexcept {
     Force += force;
 }

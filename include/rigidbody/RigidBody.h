@@ -5,37 +5,34 @@
 #include "../Math.hpp"
 #include "../structures/Gvector.hpp"
 #include "../structures/Point.hpp"
-#include <type_traits>
 
 
 using namespace _math;
 using namespace _st;
 
 
-union body_traits {
-   
-    enum class type {
-        Circle,
-        // Triangle,
-        Box,
-        Constraint
-    } bTy;
-
-};
-
-
 struct RigidBody {
-
+   
+    struct shape_traits {
+       
+        enum class type {
+            Circle,
+            Triangle,
+            Box,
+            Constraint
+        } shapeTy;
+    };
+   
     // using traits = std::underlying_type<body_traits>;
     
     // TODO do i need constexpr here?
-    RigidBody(body_traits::type bodyType) noexcept;
+    RigidBody(shape_traits::type bodyType) noexcept;
 
     // void set (const Point& position, const Gvector& width, float mass) noexcept;
 
     void set (const Point& position, const Gvector& size, float mass);
 
-    void updateForce (const Gvector& force) noexcept;
+    void addForce (const Gvector& force) noexcept;
     
     void updatePosition (float dt); 
 
@@ -47,7 +44,7 @@ struct RigidBody {
 
     //////////////////////////////////////////////////////////// 
     /// Rigid body properties
-        static body_traits BodyTraits;
+        static shape_traits ShapeTraits;
 
     /// State
         Point   Position;
@@ -56,13 +53,14 @@ struct RigidBody {
         float   AngularVelocity;
     
     /// Box properties
-        Gvector Size; // if BodyTraits.type == Circle => Size = (0, Radius)
+        Gvector Size; // if ShapeTraits.shapeTy == shape_traits::type::Circle
+    //                   => Size = (Radius, Radius)
         float   Mass, InvMass;
         float   InertiaTensor, InvI;
-        // float   Friction;
+        float   Friction;
 
     /// Applied forces
-        Gvector Force;
+        Gvector Force; // accumulated force
         float   Torque;
     ////////////////////////////////////////////////////////////
 };
