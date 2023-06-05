@@ -90,7 +90,7 @@ inline float sign (float value) noexcept {
 ////////////////////////////////////////////////////////////
 inline float abs (float value) noexcept {
     // return fabsf(value);
-    return var > 0.0f ? value : -value; 
+    return value > 0.0f ? value : -value; 
 }
 
 ////////////////////////////////////////////////////////////

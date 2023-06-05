@@ -8,6 +8,9 @@
 class IShell {
 public:
     
+    using body_shape_type = RigidBody::shape_traits::type;
+   
+
     IShell (RigidBody* body) noexcept : Mybody(body) {}
     
     virtual ~IShell() = 0;
