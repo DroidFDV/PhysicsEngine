@@ -15,8 +15,6 @@ using namespace _math;
 class Circle : public IShell {
 public:
     
-    using body_shape_type = RigidBody::shape_traits::type;
-
 
     Circle (RigidBody* body) noexcept :
         IShell(body)
