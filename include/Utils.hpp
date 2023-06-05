@@ -1,5 +1,3 @@
-//
-
 #ifndef UTILS_H
 #define UTILS_H
 
@@ -15,8 +13,9 @@
 
 _AXC_BEGIN // BEGIN namespace axc
 
+    
 ////////////////////////////////////////////////////////////
-/// \brief 
+/// To make asserts
 ////////////////////////////////////////////////////////////
 inline void _VERIFY (bool expression, const char* msg) {
     if (expression == true)
@@ -29,7 +28,7 @@ inline void _VERIFY (bool expression, const char* msg) {
 }
 
 ////////////////////////////////////////////////////////////
-/// \brief Function for swap 
+/// Swap to values with each other
 ////////////////////////////////////////////////////////////
 template <
     class _Ty
@@ -43,13 +42,8 @@ inline void swap (_Ty& _Left, _Ty& _Right) noexcept {
     } 
 }
 
+
 _AXC_END // END namespace axc
 
+    
 #endif // UTILS_H
-
-////////////////////////////////////////////////////////////
-/// \defgroup utils 
-///
-/// Math support structs and functions
-///
-////////////////////////////////////////////////////////////
