@@ -347,10 +347,10 @@ inline Gvector normalize (const Gvector& v) noexcept {
 /// \param a first operand (a vector)
 /// \param b second operand (a vector)
 ///
-/// \return angle between vectors \a a and \a b
+/// \return cos of angle between vectors \a a and \a b
 ///
 ////////////////////////////////////////////////////////////
-inline float getAngle (const Gvector& a, const Gvector& b) noexcept {
+inline float getCosAngle (const Gvector& a, const Gvector& b) noexcept {
     return dot(normalize(a), normalize(b));
 }
 

@@ -24,8 +24,8 @@ struct Point : Gvector {
     }
 
     //
-    Point rotate (const Point& Origin, float Angle) const noexcept {
-        SQmatrix RotMatrix(Angle);
+    Point rotate (const Point& Origin, float AngleDegrees) const noexcept {
+        SQmatrix RotMatrix(AngleDegrees);
         return Point( (RotMatrix * (*this - Origin)) + Origin );
     }
 

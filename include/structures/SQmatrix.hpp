@@ -22,12 +22,13 @@ struct SQmatrix {
 
     // constructor (the matrix that defines the rotation on a given angle)
     // WARNING: angle should be measured in degres, not in radians
-    explicit SQmatrix (float angle) noexcept {
-        float cos_rot = cosf(angle);
-        float sin_rot = sinf(angle);
+    explicit SQmatrix (float angleDegrees) noexcept {
+        float angleRadians = _math::toRadians(angleDegrees);
+        float cos_rot = cosf(angleRadians);
+        float sin_rot = sinf(angleRadians);
 
-        Col1.Xcoord = cos_rot;  Col2.Xcoord = sin_rot;
-        Col1.Ycoord = -sin_rot; Col2.Ycoord = cos_rot;
+        Col1.Xcoord = cos_rot;  Col2.Xcoord = -sin_rot;
+        Col1.Ycoord = sin_rot; Col2.Ycoord = cos_rot;
     }
 
     // copy constructor 

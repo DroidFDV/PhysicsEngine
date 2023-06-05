@@ -54,8 +54,8 @@ struct Line {
     ////////////////////////////////////////////////////////////
     Line (const Gvector& dirVector) : 
         begin(0,0),
-        end(DirVector.Xcoord, DirVector.Xcoord),
-        direction(DirVector) 
+        end(dirVector.Xcoord, dirVector.Xcoord),
+        direction(dirVector) 
     {}
     
     ////////////////////////////////////////////////////////////
@@ -67,8 +67,8 @@ struct Line {
     ///
     /// \return rotated line
     ////////////////////////////////////////////////////////////
-    Line rotate (const Point& Origin, float angle) noexcept {
-        SQmatrix RotMatrix(angle);
+    Line rotate (const Point& Origin, float angleDegrees) noexcept {
+        SQmatrix RotMatrix(angleDegrees);
         Point _Begin ( begin.rotate(Origin, RotMatrix) );
         Point _End ( end.rotate(Origin, RotMatrix) );
 

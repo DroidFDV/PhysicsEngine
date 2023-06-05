@@ -62,6 +62,10 @@ inline bool AlmostEqual (float A, float B, int maxUlps = kMaxUlps) //  Ulps - Un
     return false;    
 }
 
+inline float toRadians (float angleDegrees) noexcept {
+    return ( PI / 180 ) * angleDegrees;
+}
+
 //
 inline float sign (float var) noexcept {
     return var > 0.0f ? 1.0f : -1.0f;
