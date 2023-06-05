@@ -105,7 +105,7 @@ inline Gvector operator- (const Gvector& Rhs) noexcept {
 
 ////////////////////////////////////////////////////////////
 /// \relates Gvector
-/// \brief Overload of binary operato+=
+/// \brief Overload of binary operator+=
 ///
 /// This operator performs a memberwise addition of both vectors,
 /// and assigns the result to \a _Lhs.
@@ -124,7 +124,7 @@ inline Gvector& operator+= (Gvector& _Lhs, const Gvector& _Rhs) noexcept {
 
 ////////////////////////////////////////////////////////////
 /// \relates Gvector
-/// \brief Overload of binary operato-=
+/// \brief Overload of binary operator-=
 ///
 /// This operator performs a memberwise addition of both vectors,
 /// and assigns the result to \a _Lhs.
@@ -143,7 +143,7 @@ inline Gvector& operator-= (Gvector& _Lhs, const Gvector& _Rhs) noexcept {
 
 ////////////////////////////////////////////////////////////
 /// \relates Gvector
-/// \brief Overload of binary operato*=
+/// \brief Overload of binary operator*=
 ///
 /// This operator performs a memberwise multiplication of vector,
 /// and assigns the result to \a _Lhs.
