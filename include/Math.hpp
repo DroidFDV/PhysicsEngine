@@ -40,7 +40,7 @@ static    const int32_t kMaxUlps = 4;
 /// \param A first operand (a scalar value)
 /// \param b second operand (a scalar value)
 /// 
-/// \return true if \a A is equals \a B, else false
+/// \return True if \a A is equals \a B, else false
 ///
 ////////////////////////////////////////////////////////////
 inline bool AlmostEqual (float A, float B, int maxUlps = kMaxUlps) //  Ulps - Units in the Last Place
@@ -62,38 +62,81 @@ inline bool AlmostEqual (float A, float B, int maxUlps = kMaxUlps) //  Ulps - Un
     return false;    
 }
 
+////////////////////////////////////////////////////////////
+/// Convertion degrees to radians
+/// 
+/// \param angleDegrees angle to convert in degrees
+/// \return Angle to convert in radians
+////////////////////////////////////////////////////////////
 inline float toRadians (float angleDegrees) noexcept {
     return ( PI / 180 ) * angleDegrees;
 }
 
-//
-inline float sign (float var) noexcept {
-    return var > 0.0f ? 1.0f : -1.0f;
+////////////////////////////////////////////////////////////
+/// Sign of value
+/// 
+/// \param value
+/// \return If value > 0 return 1, else -1
+////////////////////////////////////////////////////////////
+inline float sign (float value) noexcept {
+    return value > 0.0f ? 1.0f : -1.0f;
 } 
 
-//
-inline float abs (float var) noexcept {
-    // return fabsf(var);
-    return var > 0.0f ? var : -var; 
+////////////////////////////////////////////////////////////
+/// Abs of value
+/// 
+/// \param value
+/// \return If value > 0 return value, else -value
+////////////////////////////////////////////////////////////
+inline float abs (float value) noexcept {
+    // return fabsf(value);
+    return var > 0.0f ? value : -value; 
 }
 
-//
+////////////////////////////////////////////////////////////
+/// Calculate min of two given values
+/// 
+/// \param a value 1
+/// \param b value 2
+/// \return If a > b return b, else a
+////////////////////////////////////////////////////////////
 inline float min (float a, float b) noexcept {
     return a > b ? b : a;
 }
 
-//
+////////////////////////////////////////////////////////////
+/// Calculate max of two given values
+/// 
+/// \param a value 1
+/// \param b value 2
+/// \return If a > b return a, else b
+////////////////////////////////////////////////////////////
 inline float max (float a, float b) noexcept {
     return a > b ? a : b;
 }
 
-//
-inline float clamp (float var, float _UpperBound, float _LowerBound) noexcept {
-    return _MATH max( _LowerBound, _MATH min(var, _UpperBound) );
+////////////////////////////////////////////////////////////
+/// Averages the value
+/// 
+/// \param value to be averaged
+/// \param _UpperBound upper bound
+/// \param _LowerBound lower bound
+/// \return If value > _UpperBound > _LowerBound return 
+///         _UpperBound, If _UpperBound > value > _LowerBound
+///         return value, else return _LowerBound
+////////////////////////////////////////////////////////////
+inline float clamp (float value, float _UpperBound, float _LowerBound) noexcept {
+    return _MATH max( _LowerBound, _MATH min(value, _UpperBound) );
 }
 
-//
-inline float random(float _LowerBound = -1.0f, float _UpperBound = 1.0f) noexcept {
+////////////////////////////////////////////////////////////
+/// Randomizer
+/// 
+/// \param _UpperBound upper bound
+/// \param _LowerBound lower bound
+/// \return Random value between _LowerBound and _UpperBound
+////////////////////////////////////////////////////////////
+inline float random (float _LowerBound = -1.0f, float _UpperBound = 1.0f) noexcept {
     float result = (float) rand();
     result /= RAND_MAX;
     result = (_UpperBound - _LowerBound) * result + _LowerBound;
