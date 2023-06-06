@@ -16,8 +16,9 @@ bool World::warmStarting  = true;
 bool World::posCorrection = true;
 
 
-void World::addObject (IShell* object) {
+IShell* World::addObject (IShell* object) {
     vecObjects.push_back(object);
+    return vecObjects.back();
 }
 
 void World::clear() {
@@ -34,7 +35,7 @@ void World::broadPhase() {
             IShell* oj = vecObjects[j];
 
             if (oi->getInvI() == 0.0f && oj->getInvI() == 0.0f) {
-                continue;
+                continue; // oi & oj are both constraints
             }
     
             Manager mg(oi, oj);
@@ -65,7 +66,7 @@ void World::step (float dt) {
     for (size_t i = 0; i < vecObjects.size(); i++) {
         IShell* shell = vecObjects[i];
 
-        if (shell->getMass() == 0.0f) { continue; }
+        if (shell->getInvMass() == 0.0f) { continue; }
 
         shell->Mybody->Velocity += dt * (WorldGravity + shell->getInvI() * shell->getForce());
         shell->Mybody->AngularVelocity += dt * shell->getInvI() * shell->getTorque();
