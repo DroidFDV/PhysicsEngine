@@ -18,7 +18,7 @@ struct World {
         Iterations(iterations)
     {}
    
-    void addObject (IShell* object);
+    IShell* addObject (IShell* object);
 
     void clear();
 
@@ -28,7 +28,8 @@ struct World {
     
     std::vector<IShell*> vecObjects;
     std::map<ManagerKey, Manager> mapManagers;
-    _st::Gvector WorldGravity; 
+    _st::Gvector WorldGravity;
+
     int          Iterations;
     static bool  accImpulses;
     static bool  warmStarting;
