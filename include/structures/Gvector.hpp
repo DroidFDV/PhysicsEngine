@@ -1,7 +1,10 @@
 #ifndef GVECTOR_H
 #define GVECTOR_H
 
+
 #include "../Math.hpp"
+#include <SFML/Graphics.hpp>
+
 
 #define _ST_BEGIN namespace _st {
 #define _ST_END   }
@@ -46,6 +49,16 @@ struct Gvector {
         Xcoord = _Rhs.Xcoord;
         Ycoord = _Rhs.Ycoord;
         return *this;
+    }
+
+    ////////////////////////////////////////////////////////////
+    /// \brief User-defined type conversation from _st::Gvector
+    ///        to sf::Vector2f
+    ///
+    /// \return New sf::Vector2f with coords Xcoord, Ycoord
+    ////////////////////////////////////////////////////////////
+    operator sf::Vector2f() const {
+        return sf::Vector2f{Xcoord, Ycoord};
     }
 
     ////////////////////////////////////////////////////////////
