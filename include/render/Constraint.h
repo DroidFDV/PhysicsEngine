@@ -2,7 +2,7 @@
 #define CONSTRAINT_H
 
 
-
+struct Constraint {};
 
 
 #endif

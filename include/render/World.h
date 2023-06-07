@@ -6,6 +6,7 @@
 #include <map>
 #include "../Math.hpp"
 #include "../rigidbody/Manager.h"
+#include "Constraint.h"
 
 
 struct RigidBody;
@@ -27,6 +28,7 @@ struct World {
     void broadPhase();
     
     std::vector<IShell*> vecObjects;
+    std::vector<const Constraint*> vecConstraints;
     std::map<ManagerKey, Manager> mapManagers;
     _st::Gvector WorldGravity;
 
