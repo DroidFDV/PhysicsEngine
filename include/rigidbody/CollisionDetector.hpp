@@ -32,7 +32,7 @@ struct IsCollision {
         Gvector circleCenter = circle.Mybody->Position;
         Gvector dirVec = point - circleCenter;
         float distance2 = dot(dirVec, dirVec);
-        return (circle.Radius * circle.Radius  >= distance2);
+        return (circle.getRadius() * circle.getRadius()  >= distance2);
     }
 
 
@@ -56,7 +56,7 @@ struct IsCollision {
         Point CircleBCenter = circleB.Mybody->Position;
         float distance2 = dot(CircleBCenter - CircleACenter, CircleBCenter - CircleACenter); 
         return (
-        ( (circleA.Radius + circleB.Radius) * (circleA.Radius + circleB.Radius) ) >= distance2
+        ( (circleA.getRadius() + circleB.getRadius()) * (circleA.getRadius() + circleB.getRadius()) ) >= distance2
         );
     }
 
