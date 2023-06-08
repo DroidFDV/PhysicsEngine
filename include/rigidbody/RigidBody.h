@@ -19,7 +19,6 @@ struct RigidBody {
             Circle,
             Triangle,
             Box,
-            Constraint
         } shapeTy;
     };
    
@@ -54,7 +53,7 @@ struct RigidBody {
     
     /// Box properties
         Gvector Size; // if ShapeTraits.shapeTy == shape_traits::type::Circle
-    //                   => Size = (Radius, Radius)
+    //                   => Size = (Radius, Radius), else [width, height]
         float   Mass, InvMass;
         float   InertiaTensor, InvI;
         float   Friction;
