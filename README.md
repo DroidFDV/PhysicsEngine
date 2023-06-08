@@ -27,11 +27,14 @@ Not available now.
 
 - [x] Rewrite Gvector
 - [x] Separate math and structures
-- [ ] ?? Friction ??
+- [x] ?? Friction ??
 - [x] Abstract class for primitives
 - [x] Implement primities
 - [ ] Force Managment
 - [ ] Collision Manifolds
+  - [x] Box vs. Box
+  - [ ] Circle vs. Circle
+  - [ ] Circle vs. Box 
 - [ ] Optimize Collision Detection 
 - [ ] build.sh
 - [ ] build.bat
