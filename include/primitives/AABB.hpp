@@ -51,7 +51,7 @@ public:
     ////////////////////////////////////////////////////////////
     Point getLocalMaxCorner() const {
         _AXC _VERIFY (Mybody == nullptr, "Mybody is nullptr!");
-        return Point(Mybody->Position + Mybody->Size * 0.5f);
+        return Point(Mybody->Size * 0.5f);
     } 
     
     ////////////////////////////////////////////////////////////
@@ -62,7 +62,7 @@ public:
     ////////////////////////////////////////////////////////////
     Point getLocalMinCorner() const {
         _AXC _VERIFY (Mybody == nullptr, "Mybody is nullptr!");
-        return Point(Mybody->Position - Mybody->Size * 0.5f);
+        return Point(-Mybody->Size * 0.5f);
     }
 
    ////////////////////////////////////////////////////////////
@@ -72,7 +72,8 @@ public:
     /// \return v1 in world space
     ////////////////////////////////////////////////////////////
     Point getWorldMaxCorner() const {
-        return getLocalMaxCorner();
+        _AXC _VERIFY (Mybody == nullptr, "Mybody is nullptr!");
+        return Point(Mybody->Position + Mybody->Size * 0.5f);
     }
 
     ////////////////////////////////////////////////////////////
@@ -82,7 +83,8 @@ public:
     /// \return v3 in world space
     ////////////////////////////////////////////////////////////
     Point getWorldMinCorner() const {
-        return getLocalMinCorner();
+        _AXC _VERIFY (Mybody == nullptr, "Mybody is nullptr!");
+        return Point(Mybody->Position - Mybody->Size * 0.5f);
     }
 
     ////////////////////////////////////////////////////////////
@@ -91,8 +93,7 @@ public:
     /// \return std::vector<Point> std::vector of vertices 
     ///         { v1, v2, v3, v4 }
     ////////////////////////////////////////////////////////////
-    std::vector<Point> getVertices() const
-    {
+    std::vector<Point> getVertices() const {
         _AXC _VERIFY (Mybody == nullptr, "Mybody is nullptr!");
         std::vector<Point> vertices; 
 
