@@ -26,9 +26,8 @@ using namespace _math;
 class AABB : public IShell {
 public:
  
-    AABB (const Point& maxCorner, const Point& minCorner) noexcept :
-        IShell(nullptr),
-        Size(maxCorner - minCorner)
+    AABB (RigidBody* body) noexcept :
+        IShell(body)
     {}
    
     ~AABB() override = default;
@@ -37,13 +36,13 @@ public:
     // to consider Mybody->Position as (0,0) here?
     Point getLocalMaxCorner() const {
         _AXC _VERIFY (Mybody == nullptr, "Mybody is nullptr!");
-        return Point(Mybody->Position + Size * 0.5f);
+        return Point(Mybody->Position + Mybody->Size * 0.5f);
     } 
     
     //
     Point getLocalMinCorner() const {
         _AXC _VERIFY (Mybody == nullptr, "Mybody is nullptr!");
-        return Point(Mybody->Position - Size * 0.5f);
+        return Point(Mybody->Position - Mybody->Size * 0.5f);
     }
 
     Point getWorldMaxCorner() const {
@@ -60,8 +59,8 @@ public:
         _AXC _VERIFY (Mybody == nullptr, "Mybody is nullptr!");
         std::vector<Point> vertices; 
 
-        Point minCorner = Mybody->Position + Size * 0.5f;
-        Point maxCorner = Mybody->Position - Size * 0.5f;
+        Point minCorner = Mybody->Position + Mybody->Size * 0.5f;
+        Point maxCorner = Mybody->Position - Mybody->Size * 0.5f;
        
         vertices.push_back(maxCorner);
         vertices.push_back(Point(minCorner.Xcoord, maxCorner.Ycoord));
@@ -69,11 +68,7 @@ public:
         vertices.push_back(Point(maxCorner.Xcoord, minCorner.Ycoord));
 
         return vertices;
-    }
-    
-    
-    
-    Gvector Size;   // [width, height]
+    }    
 };
 
 
