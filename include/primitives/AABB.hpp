@@ -22,38 +22,75 @@ using namespace _math;
 //        e3
 //
 
-
+////////////////////////////////////////////////////////////
+/// \brief Derived class from IShell to present right box
+///
+////////////////////////////////////////////////////////////
 class AABB : public IShell {
 public:
  
+    ////////////////////////////////////////////////////////////
+    /// \brief Construct AABB by given rigid body
+    ///
+    ////////////////////////////////////////////////////////////
     AABB (RigidBody* body) noexcept :
         IShell(body)
     {}
    
+    ////////////////////////////////////////////////////////////
+    /// \brief Destructor
+    ///
+    ////////////////////////////////////////////////////////////
     ~AABB() override = default;
     
-    // TODO i'am not shure what i want to get here: do i need
-    // to consider Mybody->Position as (0,0) here?
+    ////////////////////////////////////////////////////////////
+    /// \brief Function to compute local max corner of body with
+    ///        respect of the center of inner body 
+    ///
+    /// \return v1 in local space of innner body
+    ////////////////////////////////////////////////////////////
     Point getLocalMaxCorner() const {
         _AXC _VERIFY (Mybody == nullptr, "Mybody is nullptr!");
         return Point(Mybody->Position + Mybody->Size * 0.5f);
     } 
     
-    //
+    ////////////////////////////////////////////////////////////
+    /// \brief Function to compute local min corner of body with
+    ///        respect of the center of inner body 
+    ///
+    /// \return v3 in local space of innner body
+    ////////////////////////////////////////////////////////////
     Point getLocalMinCorner() const {
         _AXC _VERIFY (Mybody == nullptr, "Mybody is nullptr!");
         return Point(Mybody->Position - Mybody->Size * 0.5f);
     }
 
+   ////////////////////////////////////////////////////////////
+    /// \brief Function to compute world max corner of body with
+    ///        respect of the center of world 
+    ///
+    /// \return v1 in world space
+    ////////////////////////////////////////////////////////////
     Point getWorldMaxCorner() const {
         return getLocalMaxCorner();
     }
 
+    ////////////////////////////////////////////////////////////
+    /// \brief Function to compute world min corner of body with
+    ///        respect of the center of world 
+    ///
+    /// \return v3 in world space
+    ////////////////////////////////////////////////////////////
     Point getWorldMinCorner() const {
         return getLocalMinCorner();
     }
 
-    //
+    ////////////////////////////////////////////////////////////
+    /// \brief Function to get vertices of rigid body
+    ///
+    /// \return std::vector<Point> std::vector of vertices 
+    ///         { v1, v2, v3, v4 }
+    ////////////////////////////////////////////////////////////
     std::vector<Point> getVertices() const
     {
         _AXC _VERIFY (Mybody == nullptr, "Mybody is nullptr!");
