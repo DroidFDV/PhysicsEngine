@@ -24,13 +24,12 @@ public:
         }
     }
 
-    float getRadius() noexcept {
+    float getRadius() const noexcept {
         return this->getSize().Xcoord;
     }
 
     ~Circle() override = default;
 };
-
 
 
 #endif // CIRCLE_H
