@@ -53,11 +53,7 @@ public:
         }
     }
 
-    // void zeroForces() {
-    //     for (fmp* proxy : Registry) {
-    //         proxy->Mybody->zeroForces();
-    //     }
-    // }
+  
 
     std::vector<fmp*> Registry;
     // std::map<RigidBody*, std::vector<IForceGenerator*>> Registry;
