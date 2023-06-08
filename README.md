@@ -9,21 +9,21 @@ Please use [`premake5`](https://premake.github.io/docs/Using-Premake/) to build 
 - Ensure `premake5` is in the user `PATH`
 
 ### Windows
-- use next command in root directory:
+- Use next command in root directory:
 ```
 vendor\premake5.exe [PLATFORM]
 ```
 Please check `vendor\premake5.exe --help` to see available platforms.
 
 ### Linux
-- use next command in root directory:
+- Use next command in root directory:
 ```
 premake5 [MAKE FILE GENERATOR]
 ```
-- run `./build/Core/bin/[CONFIGURATION]/Engine`
-- other way to build our project:  use script `./build.sh [ACTION]`
+- Run `./build/Core/bin/[CONFIGURATION]/Engine`
+- Other way to build our project:  use script `./build.sh [ACTION]`
 
-Please `premake5 --help` to see more details
+Please see `premake5 --help` to more details
 
 ### Mac
 Not available now.
