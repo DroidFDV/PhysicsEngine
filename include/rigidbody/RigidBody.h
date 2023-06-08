@@ -76,7 +76,7 @@ struct RigidBody {
 
     //////////////////////////////////////////////////////////// 
     /// Rigid body properties
-        static shape_traits ShapeTraits;
+        shape_traits ShapeTraits;
 
     /// State
         Point   Position;
