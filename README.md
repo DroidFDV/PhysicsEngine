@@ -1,29 +1,34 @@
-# Readme.md
+# Physics Engine
 
 ## Description
-Minimal physics engine which provide Circle, AABB, OBB and tools to detect and solve their collisions.
+Minimal physics engine which provide Circle, AABB, OBB, Force Manger, Contact Manager and other tools to create your fist pregame.
 
-## Build
-We are provide a `premake5` tool to build our project.
+## Building
+Please use [`premake5`](https://premake.github.io/docs/Using-Premake/) to build our project.
+- Ensure `premake5` is installed
+- Ensure `premake5` is in the user `PATH`
 
 ### Windows
-In root directory use:
+- use next command in root directory:
 ```
 vendor\premake5.exe [PLATFORM]
 ```
-Check ```vendor\premake5.exe --help``` to see available platforms to option `[PLATFORM]`.
+Please check `vendor\premake5.exe --help` to see available platforms.
 
 ### Linux
-In root directory use: 
+- use next command in root directory:
 ```
-premake5 gmake2
+premake5 [MAKE FILE GENERATOR]
 ```
-then in directory build use make.  Or use script `./build.sh` and run `./build/Core/bin/[CONFIGURATION]/Engine`.
+- run `./build/Core/bin/[CONFIGURATION]/Engine`
+- other way to build our project:  use script `./build.sh [ACTION]`
+
+Please `premake5 --help` to see more details
 
 ### Mac
 Not available now.
 
-# Roadmap
+## Roadmap
 
 - [x] Rewrite Gvector
 - [x] Separate math and structures
@@ -38,5 +43,5 @@ Not available now.
 - [ ] Optimize Collision Detection 
 - [ ] build.sh
 - [ ] build.bat
-- [ ] Write documentation 
+- [x] Write documentation 
 - [ ] Write wiki
