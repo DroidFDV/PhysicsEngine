@@ -82,7 +82,7 @@ struct Manager {
 
     // TODO std::vector<Contact> vecContacts;
     Contact arrContacts[MAX_POINTS];
-    int numContacts; 
+    int     numContacts; 
 
     IShell* smallShell;
     IShell* bigShell;
@@ -93,8 +93,11 @@ struct Manager {
 
 inline bool operator< (const ManagerKey& _Lhs, const ManagerKey& _Rhs) {
     if (_Lhs.smallShell->getMass() < _Rhs.smallShell->getMass()) { return true; }
-    if (_Lhs.smallShell->getMass() == _Rhs.smallShell->getMass() &&
-        _Lhs.bigShell->getMass() < _Rhs.bigShell->getMass()) { return true; }
+    if (
+        _Lhs.smallShell->getMass() == _Rhs.smallShell->getMass() &&
+        _Lhs.bigShell->getMass() < _Rhs.bigShell->getMass()
+    ) { return true; }
+    
     return false;
 }
 

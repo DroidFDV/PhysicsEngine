@@ -20,11 +20,11 @@ void Manager::update (Contact* newContacts, int numNewContacts) {
     Contact mergeContacts[2];
 
     for (int i = 0; i < numNewContacts; i++) {
-        Contact* newCont = newContacts + i;
+        Contact* newCont = newContacts + i; // newCont = newContacts[i]
         int k = -1;
 
         for (int j = 0; j < numContacts; j++) {
-            Contact* oldCont = arrContacts + j;
+            Contact* oldCont = arrContacts + j; // oldCont = arrContacts[j]
 
             if (newCont->Feature.value == oldCont->Feature.value) {
                 k = j;
@@ -32,7 +32,7 @@ void Manager::update (Contact* newContacts, int numNewContacts) {
             }
         }
 
-        if (k > -1) {
+        if (k > -1) { 
             Contact* cont = mergeContacts + i;
             Contact* oldCont = arrContacts + k;
 
@@ -47,7 +47,7 @@ void Manager::update (Contact* newContacts, int numNewContacts) {
                 cont->accTangentImpulse = 0.0f;
                 cont->accNormalImpulseBias = 0.0f;
             }
-        } else {
+        } else { // there is a newCont not equal one of oldContacts
             mergeContacts[i] = newContacts[i];
         }
     }
@@ -96,11 +96,8 @@ void Manager::preStep (float invDt) {
             smallShell->Mybody->AngularVelocity -= smallShell->getInvI() * cross(r1, f);
 
             bigShell->Mybody->Velocity += bigShell->getInvMass() * f;
-            bigShell->Mybody->AngularVelocity -= bigShell->getInvI() * cross(r2, f);
-
-
+            bigShell->Mybody->AngularVelocity += bigShell->getInvI() * cross(r2, f);
         }
-
     }
 }
 
@@ -168,7 +165,7 @@ void Manager::applyImpulse() {
         b1->Velocity -= b1->InvMass * Pt;
         b1->AngularVelocity -= b1->InvI * cross(cont->r1, Pt);
 
-        b2->Velocity -= b2->InvMass * Pt;
+        b2->Velocity += b2->InvMass * Pt;
         b2->AngularVelocity += b2->InvI * cross(cont->r2, Pt);
     }
 }
