@@ -37,13 +37,15 @@ premake5 xcode4
 - [x] ?? Friction ??
 - [x] Abstract class for primitives
 - [x] Implement primities
+- [x] Contact Managment
 - [ ] Force Managment
 - [ ] Collision Manifolds
   - [x] Box vs. Box
-  - [ ] Circle vs. Circle
+  - [x] Circle vs. Circle
   - [ ] Circle vs. Box 
-- [ ] Optimize Collision Detection 
-- [ ] build.sh
+- [ ] Optimize Collision Detection ?? Grid ??
+- [x] Render
+- [x] build.sh
 - [ ] build.bat
 - [x] Write documentation 
 - [ ] Write wiki
