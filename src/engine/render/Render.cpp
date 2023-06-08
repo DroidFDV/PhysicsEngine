@@ -17,7 +17,9 @@ void Render::renderShells (const std::vector<IShell*> vecShells) const {
 }
 
 
-void Render::renderObject (IShell* shell, sf::Color color) const {}
+void Render::renderObject (IShell* shell, sf::Color color) const {
+    return renderObject(*shell, color);
+}
 
 
 void Render::renderObject (const Circle& circle, sf::Color color) const {
