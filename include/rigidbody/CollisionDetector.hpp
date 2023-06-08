@@ -51,19 +51,19 @@ struct IsCollision {
     //
     // bool lineOBB (const Line& line, const OBB& box) const noexcept {}
 
-    bool CircleCircle (const Circle& circleA, const Circle& circleB) const noexcept {
-        Point CircleACenter = circleA.Mybody->Position;
-        Point CircleBCenter = circleB.Mybody->Position;
-        float distance2 = dot(CircleBCenter - CircleACenter, CircleBCenter - CircleACenter); 
-        return (
-        ( (circleA.getRadius() + circleB.getRadius()) * (circleA.getRadius() + circleB.getRadius()) ) >= distance2
-        );
-    }
-
 
     // ===========================================
-    // Point vs. Primitives
+    // Primitives vs. Primitives
     // ===========================================
+   
+      bool CircleCircle (const Circle& circleA, const Circle& circleB) const noexcept {
+         Point CircleACenter = circleA.Mybody->Position;
+         Point CircleBCenter = circleB.Mybody->Position;
+         float distance2 = dot(CircleBCenter - CircleACenter, CircleBCenter - CircleACenter); 
+         return (
+               ( (circleA.getRadius() + circleB.getRadius()) * (circleA.getRadius() + circleB.getRadius()) ) >= distance2
+            );
+      }
  
     // bool CircleAABB (const Circle& circle, const AABB& box) const noexcept {}
     //
