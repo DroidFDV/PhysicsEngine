@@ -14,7 +14,12 @@ using namespace _st;
 
 // struct RigidBody;
 
-
+////////////////////////////////////////////////////////////
+/// \brief A union type which store contact edges and a key
+///        key value
+/// \param Edges Edges with contact points
+/// \param value Key value to distinguish different pairs
+////////////////////////////////////////////////////////////
 union FeaturePair {
     
     struct Edges {
@@ -28,8 +33,16 @@ union FeaturePair {
 };
 
 
+////////////////////////////////////////////////////////////
+/// \brief Struct present and store a contact point
+///
+////////////////////////////////////////////////////////////
 struct Contact {
 
+    ////////////////////////////////////////////////////////////
+    /// \brief Default constructor
+    ///
+    ////////////////////////////////////////////////////////////
     Contact() noexcept :
         accNormalImpulse(0.0f),
         accTangentImpulse(0.0f), 
@@ -37,7 +50,9 @@ struct Contact {
     {}
 
 
-
+    ////////////////////////////////////////////////////////////
+    /// Member data
+    ////////////////////////////////////////////////////////////
     Gvector     ContactPos;
     Gvector     Normal;
     Point       r1, r2;
@@ -51,8 +66,19 @@ struct Contact {
 };
 
 
+////////////////////////////////////////////////////////////
+/// \brief Struct uses in std::map to store contacts with 
+///        contact rigid bodies
+///
+////////////////////////////////////////////////////////////
 struct ManagerKey {
     
+    ////////////////////////////////////////////////////////////
+    /// \brief Construct manager key
+    /// \param shellA First contact rigid body
+    /// \param shellB Second contact rigid body
+    ///
+    ////////////////////////////////////////////////////////////
     ManagerKey (IShell* shellA, IShell* shellB) {
         shellA->getMass() < shellB->getMass() ? 
             smallShell = shellA, bigShell = shellB :
@@ -60,28 +86,62 @@ struct ManagerKey {
     }
 
 
-
+    ////////////////////////////////////////////////////////////
+    /// Member data
+    ////////////////////////////////////////////////////////////
     IShell* smallShell; // has smaller mass
-    IShell* bigShell; // has bigger mass
+    IShell* bigShell;   // has bigger mass
 };
 
 
+////////////////////////////////////////////////////////////
+/// \brief Struct to manage all contacts between rigid bodies
+///
+////////////////////////////////////////////////////////////
 struct Manager {
 
+    ////////////////////////////////////////////////////////////
+    /// \brief Amount of contact points
+    ///
+    ////////////////////////////////////////////////////////////
     enum {MAX_POINTS = 2};
-
+    
+    ////////////////////////////////////////////////////////////
+    /// \brief Construct manager to solve the contact of two
+    ///        rigid bodies
+    /// \param shellA First contact rigid body
+    /// \param shellB Second contact rigid body
+    ///
+    ////////////////////////////////////////////////////////////
     Manager (IShell* shellA, IShell* shellB) noexcept;
-
+    
+    ////////////////////////////////////////////////////////////
+    /// \brief Function to update contact points
+    /// \param contact An array of contact points
+    /// \param numContacts Number of contacts = number of
+    ///        elements in contact array
+    ///
+    ////////////////////////////////////////////////////////////
     void update (Contact* contacts, int numContacts);
 
+    ////////////////////////////////////////////////////////////
+    /// \brief Function calculate pre step positions of 
+    ///        rigid bodies
+    ////////////////////////////////////////////////////////////
     void preStep (float invDt);
 
+    ////////////////////////////////////////////////////////////
+    /// \brief Function to apply impulses when manager has been
+    ///        solved a contact
+    ///
+    ////////////////////////////////////////////////////////////
     void applyImpulse();
 
     
-
-    // TODO std::vector<Contact> vecContacts;
-    Contact arrContacts[MAX_POINTS];
+    ////////////////////////////////////////////////////////////
+    /// Member data
+    ////////////////////////////////////////////////////////////
+    Contact arrContacts[MAX_POINTS]; // TODO std::vector<Contact> vecContacts;
     int     numContacts; 
 
     IShell* smallShell;
@@ -91,6 +151,17 @@ struct Manager {
 };
 
 
+////////////////////////////////////////////////////////////
+/// \relates ManagerKey
+/// \brief Overload of binary operator< to std::map using
+///
+/// \param _Lhs Left operand (a ManagerKey)
+/// \param _Rhs Right operand (a ManagerKey)
+///
+/// \return If mass of body by left ManagerKey is greater
+///         return false, else return true
+///
+////////////////////////////////////////////////////////////
 inline bool operator< (const ManagerKey& _Lhs, const ManagerKey& _Rhs) {
     if (_Lhs.smallShell->getMass() < _Rhs.smallShell->getMass()) { return true; }
     if (
@@ -102,6 +173,10 @@ inline bool operator< (const ManagerKey& _Lhs, const ManagerKey& _Rhs) {
 }
 
 
+////////////////////////////////////////////////////////////
+/// \relates ManagerKey
+/// \brief Function to solve contact between two rigid bodies
+////////////////////////////////////////////////////////////
 int Collide (Contact* _contact, IShell* shellA, IShell* shellB);
 
 
