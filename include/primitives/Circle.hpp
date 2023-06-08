@@ -31,6 +31,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Get radius of inner rigid body
     /// \return Radius of inner body
+    /// \warning Not availible for AABB and OBB
     ////////////////////////////////////////////////////////////
     float getRadius() const noexcept {
         return this->getSize().Xcoord;
