@@ -17,6 +17,9 @@ void Render::renderShells (const std::vector<IShell*> vecShells) const {
 }
 
 
+void Render::renderObject (IShell* shell, sf::Color color) const {}
+
+
 void Render::renderObject (const Circle& circle, sf::Color color) const {
     sf::CircleShape CircleS(circle.getRadius());
     CircleS.setOrigin(circle.getRadius(), circle.getRadius());
