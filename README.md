@@ -1,7 +1,7 @@
 # Physics Engine
 
 ## Description
-Minimal physics engine which provide Circle, AABB, OBB, Force Manger, Contact Manager and other tools to create your fist pregame.
+Minimal physics engine which provide Circle, AABB, OBB, Force Manger, Contact Manager and other tools to create your first pregame.
 
 ## Building
 Please use [`premake5`](https://premake.github.io/docs/Using-Premake/) to build our project.
