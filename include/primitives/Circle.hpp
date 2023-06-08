@@ -10,7 +10,7 @@ using namespace _math;
 
 
 ////////////////////////////////////////////////////////////
-/// \brief Derived class from SHell to present a circle shape
+/// \brief Derived class from IShell to present a circle shape
 ///
 ////////////////////////////////////////////////////////////
 class Circle : public IShell {
