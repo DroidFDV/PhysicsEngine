@@ -26,21 +26,21 @@ then
     # Create makefile gmake
     premake5 gmake2
     cd build
+    
+    # Build project
     make
 
 elif [ "$1" == "run" ]
 then
     # Create makefile gmake
     premake5 gmake2
+    
+    # Build project
     cd build
     make
     cd Core/bin/Debug 
-    ./Engine
+    
     # Run
-    # cd build
-    # Create a variable that will get the folder that has the word "...linux..." in its name
-    # var=$(find -name *linux*)
-    # ./$var/ProjectFolder/ProjectFolder
-    # cd ..
+    ./Engine
 fi
 exit

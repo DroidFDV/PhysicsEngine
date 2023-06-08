@@ -26,8 +26,10 @@ premake5 [MAKE FILE GENERATOR]
 Please see `premake5 --help` to more details
 
 ### Mac
-Not available now.
-
+- Use next command in root directory:
+```
+premake5 xcode4
+```
 ## Roadmap
 
 - [x] Rewrite Gvector
