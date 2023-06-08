@@ -14,20 +14,15 @@ project "Engine"
     files {
         "include/Utils.hpp",
         "include/Math.hpp",
-        -- "include/bodies/*.h",
-        -- "include/bodies/*.hpp",
-        -- "include/primitives/*.hpp",
-        -- "src/main.cpp",
-        -- "src/engine/physics/bodies/**.cpp",
-        -- "src/engine/**.hpp"
-        "include/bodies/Verlet.hpp",
-        "src/engine/Arbiter.hpp",
-        "src/engine/Renderer.hpp",
-        "src/main.cpp"
+        "include/primitives/",
+        "include/render/",
+        "include/rigidbody/",
+        "include/structures/",
+        "src/**.cpp"
     }
 
     includedirs {
-        "include"
+        "include", "src"
     }
 
     libdirs { os.findlib("SFML")}
